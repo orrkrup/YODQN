@@ -44,6 +44,9 @@ cmd:option('-verbose', 2,
 cmd:option('-threads', 1, 'number of BLAS threads')
 cmd:option('-gpu', -1, 'gpu flag')
 
+cmd:option('-server_port', 6000, 'RoboCup server port number')
+cmd:option('-image_port', 7070, 'soccerwindow2 image send port')
+
 cmd:text()
 
 local opt = cmd:parse(arg)
@@ -81,11 +84,16 @@ print("Iteration ..", step)
 local win = nil
 while step < opt.steps do
     step = step + 1
+    -- take "showstate" variable from function to display preprocessed state
+    --timer = torch.Timer()
     local action_index = agent:perceive(reward, screen, terminal)
+    --print('Perceive took ' .. timer:time().real)
 
     -- game over? get next game!
     if not terminal then
+        --timer2 = torch.Timer()
         screen, reward, terminal = game_env:step(game_actions[action_index], true)
+        --print('Agent step took ' .. timer2:time().real)
     else
         if opt.random_starts > 0 then
             screen, reward, terminal = game_env:nextRandomGame()
@@ -95,7 +103,11 @@ while step < opt.steps do
     end
 
     -- display screen
-    win = image.display({image=screen, win=win})
+    -- win = image.display({image=screen, win=win})
+    --if step % 1000 == 0 then
+    --    print(showstate:size())
+    --    image.save(string.format('./Images/proc_img%d.png', step), showstate)
+    --end
 
     if step % opt.prog_freq == 0 then
         assert(step==agent.numSteps, 'trainer step: ' .. step ..
@@ -116,6 +128,9 @@ while step < opt.steps do
         nepisodes = 0
         episode_reward = 0
 
+        local epoch_goals = 0
+        local epoch_trials = 0
+
         local eval_time = sys.clock()
         for estep=1,opt.eval_steps do
             local action_index = agent:perceive(reward, screen, terminal, true, 0.05)
@@ -124,7 +139,7 @@ while step < opt.steps do
             screen, reward, terminal = game_env:step(game_actions[action_index])
 
             -- display screen
-            win = image.display({image=screen, win=win})
+           --  win = image.display({image=screen, win=win})
 
             if estep%1000 == 0 then collectgarbage() end
 
@@ -132,6 +147,14 @@ while step < opt.steps do
             episode_reward = episode_reward + reward
             if reward ~= 0 then
                nrewards = nrewards + 1
+            end
+
+            -- Goal count for epoch
+            if reward > 50 then
+               epoch_goals = epoch_goals + 1
+            end
+            if terminal then
+               epoch_trials = epoch_trials + 1
             end
 
             if terminal then
@@ -176,6 +199,8 @@ while step < opt.steps do
             step, step*opt.actrep, total_reward, agent.ep, agent.lr, time_dif,
             training_rate, eval_time, opt.actrep*opt.eval_steps/eval_time,
             nepisodes, nrewards))
+
+        print(string.format('\nEpoch goals: %d / %d', epoch_goals, epoch_trials))
     end
 
     if step % opt.save_freq == 0 or step == opt.steps then

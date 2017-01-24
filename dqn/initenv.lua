@@ -90,7 +90,10 @@ function torchSetup(_opt)
             print('CUTorch Seed:', cutorch.initialSeed())
         end
     end
-
+    
+    -- assertions to make sure api_agent can be initialized
+    assert(opt.image_port)
+    assert(opt.server_port)
     return opt
 end
 
@@ -112,10 +115,10 @@ function setup(_opt)
     local opt = torchSetup(_opt)
 
     -- load training framework and environment
-    local framework = require(opt.framework)
-    assert(framework)
-
-    local gameEnv = framework.GameEnvironment(opt)
+    --local framework = require("hfowrap")
+    --assert(framework)
+    require 'hfowrap'
+    local gameEnv = GameEnvironment(opt)
     local gameActions = gameEnv:getActions()
 
     -- agent options

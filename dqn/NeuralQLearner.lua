@@ -148,6 +148,12 @@ function nql:__init(args)
     self.g  = self.dw:clone():fill(0)
     self.g2 = self.dw:clone():fill(0)
 
+    if pcall(require, 'cudnn') then
+      require 'cudnn'
+      cudnn.benchmark = true
+      cudnn.convert(self.network, cudnn)
+    end
+    
     if self.target_q then
         self.target_network = self.network:clone()
     end

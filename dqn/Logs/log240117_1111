@@ -1,0 +1,148 @@
+../run_gpu: line 7: [: missing `]'
+../run_gpu: line 7: -z: command not found
+-framework hfowrap -game_path /home/deep3/Orr_Yona_DQN/dqn/roms/ -name DQN3_0_1_HFO_FULL_Y1111 -env HFO -env_params useRGB=true -agent NeuralQLearner -agent_params lr=0.002,ep=1,ep_end=0.1,ep_endt=200000,discount=0.99,hist_len=4,learn_start=5000,replay_memory=120000,update_freq=4,n_replay=1,network="convnet_atari3",preproc="net_downsample_2x_full_y",state_dim=7056,minibatch_size=32,rescale_r=1,ncols=1,bufferSize=512,valid_size=500,target_q=10000,clip_delta=1,min_reward=-4,max_reward=1000 -steps 10000000 -eval_freq 100000 -eval_steps 5000 -prog_freq 10000 -save_freq 125000 -actrep 4 -gpu 0 -random_starts 30 -pool_frms type="max",size=2 -seed 1 -threads 4 -server_port 6013 -image_port 7013
+Torch Threads:	1
+Using GPU device id:	0
+Torch Seed:	1
+CUTorch Seed:	1791095845
+Initializing api_agent
+******************************************************************
+ librcsc 4.1.0
+ Copyright 2000 - 2007. Hidehisa Akiyama.
+ Copyright 2007 - 2011. Hidehisa Akiyama and Hiroki Shimora
+ All rights reserved.
+******************************************************************
+api_agent connected to server
+api_agent intialization complete
+
+Playing: HFO!
+Creating Agent Network from convnet_atari3
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> output]
+  (1): nn.Reshape(4x84x84)
+  (2): nn.SpatialConvolution(4 -> 32, 8x8, 4,4, 1,1)
+  (3): nn.Rectifier
+  (4): nn.SpatialConvolution(32 -> 64, 4x4, 2,2)
+  (5): nn.Rectifier
+  (6): nn.SpatialConvolution(64 -> 64, 3x3)
+  (7): nn.Rectifier
+  (8): nn.Reshape(3136)
+  (9): nn.ConcatTable {
+    input
+      |`-> (1): nn.Sequential {
+      |      [input -> (1) -> (2) -> (3) -> output]
+      |      (1): nn.Linear(3136 -> 512)
+      |      (2): nn.ReLU
+      |      (3): nn.Linear(512 -> 1)
+      |    }
+       `-> (2): nn.Sequential {
+             [input -> (1) -> (2) -> (3) -> output]
+             (1): nn.Linear(3136 -> 512)
+             (2): nn.ReLU
+             (3): nn.Linear(512 -> 3)
+           }
+       ... -> output
+  }
+  (10): nn.Sequential {
+    [input -> (1) -> (2) -> output]
+    (1): nn.ParallelTable {
+      input
+        |`-> (1): nn.Replicate
+         `-> (2): nn.Sequential {
+               [input -> (1) -> (2) -> output]
+               (1): nn.ConcatTable {
+                 input
+                   |`-> (1): nn.Identity
+                    `-> (2): nn.Sequential {
+                          [input -> (1) -> (2) -> output]
+                          (1): nn.Mean
+                          (2): nn.Replicate
+                        }
+                    ... -> output
+               }
+               (2): nn.CSubTable
+             }
+         ... -> output
+    }
+    (2): nn.CAddTable
+  }
+}
+Convolutional layers flattened output size:	3136
+Set up Torch using these options:
+eval_steps	5000
+seed	1
+name	DQN3_0_1_HFO_FULL_Y1111
+verbose	2
+network	
+tensorType	torch.FloatTensor
+pool_frms	table: 0x416eec48
+saveNetworkParams	false
+steps	10000000
+gpu	1
+eval_freq	100000
+game_path	/home/deep3/Orr_Yona_DQN/dqn/roms/
+env_params	table: 0x416ee698
+actrep	4
+image_port	7013
+agent_params	table: 0x416eeb80
+random_starts	30
+framework	hfowrap
+agent	NeuralQLearner
+threads	4
+save_versions	0
+server_port	6013
+prog_freq	10000
+save_freq	125000
+env	HFO
+Iteration ..	0
+Steps: 	10000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.031345564063111 cudnn.SpatialConvolution: 0.022076273553349 cudnn.SpatialConvolution: 0.020891255371387 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089317813237737 nn.Linear: 0.022976988204413] nn.Sequential: [nn.Linear: 0.0089376217330676 nn.Linear: 0.021908513777994]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.065624192357063 cudnn.SpatialConvolution: 0.047665636986494 cudnn.SpatialConvolution: 0.045958295464516 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.019801022484899 nn.Linear: 0.049370616674423] nn.Sequential: [nn.Linear: 0.019366221502423 nn.Linear: 0.04753003269434]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0011548991069954 cudnn.SpatialConvolution: 0.00026338775409222 cudnn.SpatialConvolution: 0.00019456343253231 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.064267327558e-05 nn.Linear: 0.0011296142992353] nn.Sequential: [nn.Linear: 2.7531998089274e-05 nn.Linear: 0.0010809518731552]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0072017894126475 cudnn.SpatialConvolution: 0.0072236256673932 cudnn.SpatialConvolution: 0.0095307789742947 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0019577357452363 nn.Linear: 0.0085118440911174] nn.Sequential: [nn.Linear: 0.0016499910270795 nn.Linear: 0.011188013479114]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	20000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.033663553626324 cudnn.SpatialConvolution: 0.022650579369273 cudnn.SpatialConvolution: 0.021372952817954 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089570659890116 nn.Linear: 0.037602209864708] nn.Sequential: [nn.Linear: 0.0089407952879526 nn.Linear: 0.023069109365027]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.15759871900082 cudnn.SpatialConvolution: 0.090431168675423 cudnn.SpatialConvolution: 0.10681441426277 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.051365870982409 nn.Linear: 0.20542412996292] nn.Sequential: [nn.Linear: 0.024738602340221 nn.Linear: 0.063775293529034]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00047513479936639 cudnn.SpatialConvolution: 0.00019299279743877 cudnn.SpatialConvolution: 0.00014992169083124 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.1857271816173e-05 nn.Linear: 0.0015545008957028] nn.Sequential: [nn.Linear: 6.6977324968312e-06 nn.Linear: 0.00020988354654463]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0042535490356386 cudnn.SpatialConvolution: 0.0052470611408353 cudnn.SpatialConvolution: 0.0051853121258318 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0040348162874579 nn.Linear: 0.0099366391077638] nn.Sequential: [nn.Linear: 0.00083731726044789 nn.Linear: 0.0014816881157458]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	30000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.035336651043246 cudnn.SpatialConvolution: 0.023039557786976 cudnn.SpatialConvolution: 0.021643371859805 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.008971905524131 nn.Linear: 0.041774571626689] nn.Sequential: [nn.Linear: 0.0089418452918249 nn.Linear: 0.023273520665245]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.19510889053345 cudnn.SpatialConvolution: 0.12321464717388 cudnn.SpatialConvolution: 0.12578232586384 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.078803978860378 nn.Linear: 0.2945770919323] nn.Sequential: [nn.Linear: 0.024228034541011 nn.Linear: 0.06752997636795]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00060186149501434 cudnn.SpatialConvolution: 0.00018835947131877 cudnn.SpatialConvolution: 0.00014267558240857 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.1570752587788e-05 nn.Linear: 0.0017660932476127] nn.Sequential: [nn.Linear: 1.2792348962578e-05 nn.Linear: 0.00038704001958486]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0083748735487461 cudnn.SpatialConvolution: 0.0047819246537983 cudnn.SpatialConvolution: 0.0033029559999704 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.005035690497607 nn.Linear: 0.012831253930926] nn.Sequential: [nn.Linear: 0.0016010223189369 nn.Linear: 0.0040141567587852]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	40000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.037615344521198 cudnn.SpatialConvolution: 0.023481587336704 cudnn.SpatialConvolution: 0.021925325228336 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089837841902887 nn.Linear: 0.042075260723294] nn.Sequential: [nn.Linear: 0.008943101377339 nn.Linear: 0.023592938646961]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.32441467046738 cudnn.SpatialConvolution: 0.18419674038887 cudnn.SpatialConvolution: 0.13603118062019 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.1013293415308 nn.Linear: 0.33238545060158] nn.Sequential: [nn.Linear: 0.028370466083288 nn.Linear: 0.065578512847424]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0045941328005731 cudnn.SpatialConvolution: 0.0010069600432107 cudnn.SpatialConvolution: 0.0005329525095612 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.2098786254962e-05 nn.Linear: 0.0014912439384427] nn.Sequential: [nn.Linear: 2.3210650690258e-05 nn.Linear: 0.0009826605865794]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.089192382991314 cudnn.SpatialConvolution: 0.048226818442345 cudnn.SpatialConvolution: 0.0302928481251 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0068506845273077 nn.Linear: 0.015408799052238] nn.Sequential: [nn.Linear: 0.0033645764924586 nn.Linear: 0.010141928680241]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	50000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.039026761365466 cudnn.SpatialConvolution: 0.023769495952499 cudnn.SpatialConvolution: 0.022094961491275 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.008989137281538 nn.Linear: 0.042614972111153] nn.Sequential: [nn.Linear: 0.0089445320020827 nn.Linear: 0.024008076469623]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.30720537900925 cudnn.SpatialConvolution: 0.2119082659483 cudnn.SpatialConvolution: 0.16570316255093 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.11165723949671 nn.Linear: 0.34374290704727] nn.Sequential: [nn.Linear: 0.030221318826079 nn.Linear: 0.071434423327446]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00055582478624882 cudnn.SpatialConvolution: 0.00014741963732848 cudnn.SpatialConvolution: 0.00013583212402543 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.6793220488275e-05 nn.Linear: 0.0018166870868121] nn.Sequential: [nn.Linear: 1.90054296087e-05 nn.Linear: 0.0007385033021103]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.012623388320208 cudnn.SpatialConvolution: 0.0066347024403512 cudnn.SpatialConvolution: 0.0073738479986787 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0072175697423518 nn.Linear: 0.016489895060658] nn.Sequential: [nn.Linear: 0.0044475924223661 nn.Linear: 0.0067769652232528]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+qlua: ./NeuralQLearner.lua:178: attempt to index local 'rawstate' (a nil value)
+stack traceback:
+	[C]: in function '__index'
+	./NeuralQLearner.lua:178: in function 'preprocess'
+	./NeuralQLearner.lua:308: in function 'perceive'
+	/home/deep3/Orr_Yona_DQN/dqn/train_agent.lua:88: in main chunk

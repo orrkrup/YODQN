@@ -1,0 +1,25 @@
+-framework hfowrap -game_path /home/deep3/Orr_Yona_DQN/dqn/roms/ -name DQN3_0_1_HFO_FULL_Y1325 -env HFO -env_params useRGB=true -agent NeuralQLearner -agent_params lr=0.0025,ep=1,ep_end=0.1,ep_endt=replay_memory,discount=0.99,hist_len=4,learn_start=5000,replay_memory=120000,update_freq=4,n_replay=1,network="convnet_atari3_",preproc="net_downsample_2x_full_y",state_dim=7056,minibatch_size=32,rescale_r=1,ncols=1,bufferSize=512,valid_size=500,target_q=10000,clip_delta=1,min_reward=-4,max_reward=1000 -steps 10000000 -eval_freq 100000 -eval_steps 5000 -prog_freq 10000 -save_freq 125000 -actrep 4 -gpu 0 -random_starts 30 -pool_frms type="max",size=2 -seed 1 -threads 4 -server_port 6060 -image_port 7070
+Torch Threads:	1
+Using GPU device id:	0
+Torch Seed:	1
+CUTorch Seed:	1791095845
+Initializing api_agent
+******************************************************************
+ librcsc 4.1.0
+ Copyright 2000 - 2007. Hidehisa Akiyama.
+ Copyright 2007 - 2011. Hidehisa Akiyama and Hiroki Shimora
+ All rights reserved.
+******************************************************************
+api_agent connected to server
+api_agent intialization complete
+
+Playing: HFO!
+qlua: ./NeuralQLearner.lua:79: Could not find network file 
+stack traceback:
+	[C]: at 0x7f70964699c0
+	[C]: in function 'error'
+	./NeuralQLearner.lua:79: in function '__init'
+	/home/deep3/torch/install/share/lua/5.1/torch/init.lua:91: in function </home/deep3/torch/install/share/lua/5.1/torch/init.lua:87>
+	[C]: at 0x7f707c167770
+	./initenv.lua:136: in function 'setup'
+	/home/deep3/Orr_Yona_DQN/dqn/train_agent.lua:55: in main chunk

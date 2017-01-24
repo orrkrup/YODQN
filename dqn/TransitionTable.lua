@@ -57,6 +57,16 @@ function trans:__init(args)
     self.t = torch.ByteTensor(self.maxSize):fill(0)
     self.action_encodings = torch.eye(self.numActions)
 
+    -- Priotritized replay memory variables
+    self.s_s = torch.ByteTensor(self.maxSize, self.stateDim):fill(0)
+    self.a_s = torch.LongTensor(self.maxSize):fill(0)
+    self.r_s = torch.zeros(self.maxSize)
+    self.t_s = torch.ByteTensor(self.maxSize):fill(0)
+    self.last_begin_index = 1
+    self.numEntries_s = 0
+    self.insertIndex_s = 0
+    self.prioReplayProb = 0.2
+
     -- Tables for storing the last histLen states.  They are used for
     -- constructing the most recent agent state more easily.
     self.recent_s = {}
@@ -80,6 +90,9 @@ end
 function trans:reset()
     self.numEntries = 0
     self.insertIndex = 0
+
+    self.numEntries_s = 0
+    self.insertIndex_s = 0
 end
 
 
@@ -119,28 +132,39 @@ function trans:sample_one()
     assert(self.numEntries > 1)
     local index
     local valid = false
-    while not valid do
-        -- start at 2 because of previous action
-        index = torch.random(2, self.numEntries-self.recentMemSize)
-        if self.t[index+self.recentMemSize-1] == 0 then
-            valid = true
+    -- Select from prioritized replay memory with some probability
+    if self.numEntries_s > 1 and torch.uniform() < self.prioReplayProb then
+        while not valid do
+            -- start at 2 because of previous action
+            index = torch.random(2, self.numEntries_s-self.recentMemSize)
+            if self.t[index+self.recentMemSize-1] == 0 then
+                valid = true
+            end
         end
-        if self.nonTermProb < 1 and self.t[index+self.recentMemSize] == 0 and
-            torch.uniform() > self.nonTermProb then
-            -- Discard non-terminal states with probability (1-nonTermProb).
-            -- Note that this is the terminal flag for s_{t+1}.
-            valid = false
+        return self:get_s(index)
+    else
+        while not valid do
+            -- start at 2 because of previous action
+            index = torch.random(2, self.numEntries-self.recentMemSize)
+            if self.t[index+self.recentMemSize-1] == 0 then
+                valid = true
+            end
+            if self.nonTermProb < 1 and self.t[index+self.recentMemSize] == 0 and
+                torch.uniform() > self.nonTermProb then
+                -- Discard non-terminal states with probability (1-nonTermProb).
+                -- Note that this is the terminal flag for s_{t+1}.
+                valid = false
+            end
+            if self.nonEventProb < 1 and self.t[index+self.recentMemSize] == 0 and
+                self.r[index+self.recentMemSize-1] == 0 and
+                torch.uniform() > self.nonTermProb then
+                -- Discard non-terminal or non-reward states with
+                -- probability (1-nonTermProb).
+                valid = false
+            end
         end
-        if self.nonEventProb < 1 and self.t[index+self.recentMemSize] == 0 and
-            self.r[index+self.recentMemSize-1] == 0 and
-            torch.uniform() > self.nonTermProb then
-            -- Discard non-terminal or non-reward states with
-            -- probability (1-nonTermProb).
-            valid = false
-        end
+        return self:get(index)
     end
-
-    return self:get(index)
 end
 
 
@@ -169,8 +193,11 @@ end
 
 
 function trans:concatFrames(index, use_recent)
-    if use_recent then
+    if 1 == use_recent then
         s, t = self.recent_s, self.recent_t
+    elseif 2 == use_recent then
+        -- 2 means use prioritized replay memory
+        s, t = self.s_s, self.t_s
     else
         s, t = self.s, self.t
     end
@@ -256,16 +283,25 @@ end
 
 function trans:get_recent()
     -- Assumes that the most recent state has been added, but the action has not
-    return self:concatFrames(1, true):float():div(255)
+    return self:concatFrames(1, 1):float():div(255)
 end
 
 
 function trans:get(index)
-    local s = self:concatFrames(index)
-    local s2 = self:concatFrames(index+1)
+    local s = self:concatFrames(index, 0)
+    local s2 = self:concatFrames(index+1, 0)
     local ar_index = index+self.recentMemSize-1
 
     return s, self.a[ar_index], self.r[ar_index], s2, self.t[ar_index+1]
+end
+
+
+function trans:get_s(index)
+    local s = self:concatFrames(index, 2)
+    local s2 = self:concatFrames(index+1, 2)
+    local ar_index = index+self.recentMemSize-1
+
+    return s, self.a_s[ar_index], self.r_s[ar_index], s2, self.t_s[ar_index+1]
 end
 
 
@@ -292,6 +328,36 @@ function trans:add(s, a, r, term)
     self.r[self.insertIndex] = r
     if term then
         self.t[self.insertIndex] = 1
+
+        local prev_rIndex = self.insertIndex - 1
+        if prev_rIndex == 0 then
+            prev_rIndex = self.numEntries
+        end
+        -- If necessary, add trajectory to prioritized success replay
+        if self.r[prev_rIndex] > 50 then
+            for k=self.last_begin_index,self.insertIndex do
+
+               -- Always insert at next index, then wrap around
+               self.insertIndex_s = self.insertIndex_s + 1
+               -- Overwrite oldest experience once at capacity
+               if self.insertIndex_s > self.maxSize then
+                   self.insertIndex_s = 1
+               end
+
+               -- Copy trajectory to prioritized replay
+               self.s_s[self.insertIndex_s] = self.s[k]
+               self.r_s[self.insertIndex_s] = self.r[k]
+               self.a_s[self.insertIndex_s] = self.a[k]
+               self.t_s[self.insertIndex_s] = self.t[k]
+
+               -- Incremenet until at full capacity
+               if self.numEntries_s < self.maxSize then
+                   self.numEntries_s = self.numEntries_s + 1
+               end
+
+            end
+        end
+        self.last_begin_index = self.insertIndex + 1
     else
         self.t[self.insertIndex] = 0
     end
@@ -381,6 +447,16 @@ function trans:read(file)
     self.r = torch.zeros(self.maxSize)
     self.t = torch.ByteTensor(self.maxSize):fill(0)
     self.action_encodings = torch.eye(self.numActions)
+
+    -- variables for prioritized success replay memory
+    self.prioReplayProb = 0.2
+    self.numEntries_s = 0
+    self.insertIndex_s = 0
+    self.last_begin_index = 1
+    self.s_s = torch.ByteTensor(self.maxSize, self.stateDim):fill(0)
+    self.a_s = torch.LongTensor(self.maxSize):fill(0)
+    self.r_s = torch.zeros(self.maxSize)
+    self.t_s = torch.ByteTensor(self.maxSize):fill(0)
 
     -- Tables for storing the last histLen states.  They are used for
     -- constructing the most recent agent state more easily.

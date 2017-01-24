@@ -1,0 +1,818 @@
+../run_gpu: line 7: [: missing `]'
+../run_gpu: line 7: -z: command not found
+-framework hfowrap -game_path /home/deep3/Orr_Yona_DQN/dqn/roms/ -name DQN3_0_1_HFO_FULL_Y1141 -env HFO -env_params useRGB=true -agent NeuralQLearner -agent_params lr=0.002,ep=1,ep_end=0.1,ep_endt=200000,discount=0.99,hist_len=4,learn_start=5000,replay_memory=120000,update_freq=4,n_replay=1,network="convnet_atari3",preproc="net_downsample_2x_full_y",state_dim=7056,minibatch_size=32,rescale_r=1,ncols=1,bufferSize=512,valid_size=500,target_q=10000,clip_delta=1,min_reward=-4,max_reward=1000 -steps 10000000 -eval_freq 100000 -eval_steps 5000 -prog_freq 10000 -save_freq 125000 -actrep 4 -gpu 0 -random_starts 30 -pool_frms type="max",size=2 -seed 1 -threads 4 -server_port 6023 -image_port 7023
+Torch Threads:	1
+Using GPU device id:	0
+Torch Seed:	1
+CUTorch Seed:	1791095845
+Initializing api_agent
+******************************************************************
+ librcsc 4.1.0
+ Copyright 2000 - 2007. Hidehisa Akiyama.
+ Copyright 2007 - 2011. Hidehisa Akiyama and Hiroki Shimora
+ All rights reserved.
+******************************************************************
+api_agent connected to server
+api_agent intialization complete
+
+Playing: HFO!
+Creating Agent Network from convnet_atari3
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> output]
+  (1): nn.Reshape(4x84x84)
+  (2): nn.SpatialConvolution(4 -> 32, 8x8, 4,4, 1,1)
+  (3): nn.Rectifier
+  (4): nn.SpatialConvolution(32 -> 64, 4x4, 2,2)
+  (5): nn.Rectifier
+  (6): nn.SpatialConvolution(64 -> 64, 3x3)
+  (7): nn.Rectifier
+  (8): nn.Reshape(3136)
+  (9): nn.ConcatTable {
+    input
+      |`-> (1): nn.Sequential {
+      |      [input -> (1) -> (2) -> (3) -> output]
+      |      (1): nn.Linear(3136 -> 512)
+      |      (2): nn.ReLU
+      |      (3): nn.Linear(512 -> 1)
+      |    }
+       `-> (2): nn.Sequential {
+             [input -> (1) -> (2) -> (3) -> output]
+             (1): nn.Linear(3136 -> 512)
+             (2): nn.ReLU
+             (3): nn.Linear(512 -> 3)
+           }
+       ... -> output
+  }
+  (10): nn.Sequential {
+    [input -> (1) -> (2) -> output]
+    (1): nn.ParallelTable {
+      input
+        |`-> (1): nn.Replicate
+         `-> (2): nn.Sequential {
+               [input -> (1) -> (2) -> output]
+               (1): nn.ConcatTable {
+                 input
+                   |`-> (1): nn.Identity
+                    `-> (2): nn.Sequential {
+                          [input -> (1) -> (2) -> output]
+                          (1): nn.Mean
+                          (2): nn.Replicate
+                        }
+                    ... -> output
+               }
+               (2): nn.CSubTable
+             }
+         ... -> output
+    }
+    (2): nn.CAddTable
+  }
+}
+Convolutional layers flattened output size:	3136
+Set up Torch using these options:
+eval_steps	5000
+seed	1
+name	DQN3_0_1_HFO_FULL_Y1141
+verbose	2
+network	
+tensorType	torch.FloatTensor
+pool_frms	table: 0x41643790
+saveNetworkParams	false
+steps	10000000
+gpu	1
+eval_freq	100000
+game_path	/home/deep3/Orr_Yona_DQN/dqn/roms/
+env_params	table: 0x416431e0
+actrep	4
+image_port	7023
+agent_params	table: 0x416436c8
+random_starts	30
+framework	hfowrap
+agent	NeuralQLearner
+threads	4
+save_versions	0
+server_port	6023
+prog_freq	10000
+save_freq	125000
+env	HFO
+Iteration ..	0
+Steps: 	10000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.031248257288882 cudnn.SpatialConvolution: 0.022044200777532 cudnn.SpatialConvolution: 0.020861765329029 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089307863408932 nn.Linear: 0.022299766738442] nn.Sequential: [nn.Linear: 0.008937006902424 nn.Linear: 0.021817809832754]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.063407614827156 cudnn.SpatialConvolution: 0.045100439339876 cudnn.SpatialConvolution: 0.043861657381058 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.018405800685287 nn.Linear: 0.044028740376234] nn.Sequential: [nn.Linear: 0.018344506621361 nn.Linear: 0.044967480003834]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 9.8048424995523e-05 cudnn.SpatialConvolution: 3.8697126911849e-05 cudnn.SpatialConvolution: 3.4648260298199e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 1.1828761403159e-05 nn.Linear: 0.00098458407719704] nn.Sequential: [nn.Linear: 3.7789347246261e-06 nn.Linear: 0.00017426677783755]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00050833355635405 cudnn.SpatialConvolution: 0.0008468147716485 cudnn.SpatialConvolution: 0.0010781183373183 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00049502163892612 nn.Linear: 0.0061632716096938] nn.Sequential: [nn.Linear: 0.00022045474906918 nn.Linear: 0.0017245089402422]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	20000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.031288087282073 cudnn.SpatialConvolution: 0.022058666862548 cudnn.SpatialConvolution: 0.02087480768774 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089313290887112 nn.Linear: 0.022104453656553] nn.Sequential: [nn.Linear: 0.0089372252295809 nn.Linear: 0.0217185795705]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.064350299537182 cudnn.SpatialConvolution: 0.046673472970724 cudnn.SpatialConvolution: 0.044614993035793 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.019656978547573 nn.Linear: 0.044028740376234] nn.Sequential: [nn.Linear: 0.01937454380095 nn.Linear: 0.045453008264303]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00020871699313629 cudnn.SpatialConvolution: 6.9423108046325e-05 cudnn.SpatialConvolution: 5.4217268776408e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 1.1671443792806e-05 nn.Linear: 0.0010412839912355] nn.Sequential: [nn.Linear: 4.5077287950326e-06 nn.Linear: 0.00021472054601206]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0012396939564496 cudnn.SpatialConvolution: 0.0018067655619234 cudnn.SpatialConvolution: 0.001479531172663 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00059955328470096 nn.Linear: 0.0057953335344791] nn.Sequential: [nn.Linear: 0.00030310181318782 nn.Linear: 0.001938441535458]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	30000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.031345388182543 cudnn.SpatialConvolution: 0.022077942793535 cudnn.SpatialConvolution: 0.020893049479728 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089320384880387 nn.Linear: 0.02228672324685] nn.Sequential: [nn.Linear: 0.008937464792941 nn.Linear: 0.021651011243781]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.065654568374157 cudnn.SpatialConvolution: 0.048177927732468 cudnn.SpatialConvolution: 0.046495825052261 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.020970828831196 nn.Linear: 0.046118997037411] nn.Sequential: [nn.Linear: 0.019781807437539 nn.Linear: 0.046154323965311]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00012886219588507 cudnn.SpatialConvolution: 4.9305173827281e-05 cudnn.SpatialConvolution: 3.8229095050879e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 1.0400732749637e-05 nn.Linear: 0.00084456187153481] nn.Sequential: [nn.Linear: 3.9272094154529e-06 nn.Linear: 0.00018752775919159]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00069897854700685 cudnn.SpatialConvolution: 0.00088489567860961 cudnn.SpatialConvolution: 0.001259631360881 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00051178771536797 nn.Linear: 0.0045544398017228] nn.Sequential: [nn.Linear: 0.00027211505221203 nn.Linear: 0.0016757916891947]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	40000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.031444069948939 cudnn.SpatialConvolution: 0.022109492656048 cudnn.SpatialConvolution: 0.020923850868596 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089333026337453 nn.Linear: 0.023295419402132] nn.Sequential: [nn.Linear: 0.0089377357484201 nn.Linear: 0.02160450457824]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.067558147013187 cudnn.SpatialConvolution: 0.050489261746407 cudnn.SpatialConvolution: 0.050623074173927 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.022783042863011 nn.Linear: 0.056098129600286] nn.Sequential: [nn.Linear: 0.020205354318023 nn.Linear: 0.047055676579475]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00011353690765854 cudnn.SpatialConvolution: 4.7027042387224e-05 cudnn.SpatialConvolution: 3.2481483884171e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.1117728203377e-06 nn.Linear: 0.0004073146455337] nn.Sequential: [nn.Linear: 6.3056830731825e-06 nn.Linear: 0.00029224910019452]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00065355049446225 cudnn.SpatialConvolution: 0.00073331559542567 cudnn.SpatialConvolution: 0.00089773233048618 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00030247084214352 nn.Linear: 0.0021850413177162] nn.Sequential: [nn.Linear: 0.00042625432251953 nn.Linear: 0.0024977982975543]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	50000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.031646344901617 cudnn.SpatialConvolution: 0.022172368124974 cudnn.SpatialConvolution: 0.020983232867596 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00893600131399 nn.Linear: 0.025788738159434] nn.Sequential: [nn.Linear: 0.0089380193412003 nn.Linear: 0.021562145842741]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.070894911885262 cudnn.SpatialConvolution: 0.054771076887846 cudnn.SpatialConvolution: 0.057958483695984 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.025478225201368 nn.Linear: 0.072083599865437] nn.Sequential: [nn.Linear: 0.020284419879317 nn.Linear: 0.048462092876434]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00023350519591859 cudnn.SpatialConvolution: 7.5769856581138e-05 cudnn.SpatialConvolution: 3.736802159237e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.7430402555654e-06 nn.Linear: 0.00027071709454635] nn.Sequential: [nn.Linear: 3.0222239473839e-06 nn.Linear: 9.1285458637298e-05]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0012819714611396 cudnn.SpatialConvolution: 0.0015055167023093 cudnn.SpatialConvolution: 0.00098314450588077 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00029429257847369 nn.Linear: 0.001437937724404] nn.Sequential: [nn.Linear: 0.00018138215818908 nn.Linear: 0.00099489698186517]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	60000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.032299370779233 cudnn.SpatialConvolution: 0.022351170178413 cudnn.SpatialConvolution: 0.021130682770481 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089440381149255 nn.Linear: 0.031610805410139] nn.Sequential: [nn.Linear: 0.0089382629104208 nn.Linear: 0.021503706740854]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.090487375855446 cudnn.SpatialConvolution: 0.069925911724567 cudnn.SpatialConvolution: 0.0711360424757 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.036178193986416 nn.Linear: 0.10696182399988] nn.Sequential: [nn.Linear: 0.020746432244778 nn.Linear: 0.048900660127401]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00068572513596767 cudnn.SpatialConvolution: 0.00018183113415361 cudnn.SpatialConvolution: 9.7384462629108e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 1.6828272238889e-05 nn.Linear: 0.00060133611761103] nn.Sequential: [nn.Linear: 9.3650962001406e-06 nn.Linear: 0.00024871805316669]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0044497619383037 cudnn.SpatialConvolution: 0.0035168959293514 cudnn.SpatialConvolution: 0.003195900702849 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.001502106199041 nn.Linear: 0.003784466534853] nn.Sequential: [nn.Linear: 0.00065006600925699 nn.Linear: 0.0025971645954996]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	70000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.033909862440153 cudnn.SpatialConvolution: 0.022713095343371 cudnn.SpatialConvolution: 0.021394985966892 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089606100098661 nn.Linear: 0.038360233264143] nn.Sequential: [nn.Linear: 0.0089385419443799 nn.Linear: 0.021472162933746]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.14797405898571 cudnn.SpatialConvolution: 0.096191875636578 cudnn.SpatialConvolution: 0.10446940362453 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.054004821926355 nn.Linear: 0.18595479428768] nn.Sequential: [nn.Linear: 0.021264191716909 nn.Linear: 0.048501498997211]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0014004864192467 cudnn.SpatialConvolution: 0.00041194257686911 cudnn.SpatialConvolution: 0.00031565062179145 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.8472774685128e-05 nn.Linear: 0.0038401838244428] nn.Sequential: [nn.Linear: 1.7088608315239e-05 nn.Linear: 0.00053944279216205]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.012322619557381 cudnn.SpatialConvolution: 0.0068089133128524 cudnn.SpatialConvolution: 0.007191407494247 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0057838563807309 nn.Linear: 0.027321489527822] nn.Sequential: [nn.Linear: 0.0013095630565658 nn.Linear: 0.0056598982773721]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	80000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.035416956742864 cudnn.SpatialConvolution: 0.022999198022414 cudnn.SpatialConvolution: 0.02158353582351 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089718730280982 nn.Linear: 0.039784764238155] nn.Sequential: [nn.Linear: 0.0089384836728304 nn.Linear: 0.021253727978684]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.16824692487717 cudnn.SpatialConvolution: 0.13486754894257 cudnn.SpatialConvolution: 0.12776401638985 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.071699388325214 nn.Linear: 0.23595885932446] nn.Sequential: [nn.Linear: 0.020928742364049 nn.Linear: 0.047974441200495]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.011728275932981 cudnn.SpatialConvolution: 0.0020806854143987 cudnn.SpatialConvolution: 0.0011056904838312 nn.ConcatTable: [nn.Sequential: [nn.Linear: 8.4602494140053e-05 nn.Linear: 0.0041116825262745] nn.Sequential: [nn.Linear: 1.6383291216377e-05 nn.Linear: 0.00057570273890015]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.14780108630657 cudnn.SpatialConvolution: 0.10971838235855 cudnn.SpatialConvolution: 0.038961954414845 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.011938445270061 nn.Linear: 0.04530856013298] nn.Sequential: [nn.Linear: 0.0022499926853925 nn.Linear: 0.0067270663566887]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	90000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.036895650781085 cudnn.SpatialConvolution: 0.023317658316191 cudnn.SpatialConvolution: 0.021808022656252 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089831780667724 nn.Linear: 0.042637244185364] nn.Sequential: [nn.Linear: 0.0089385638476304 nn.Linear: 0.021159719503049]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.18797831237316 cudnn.SpatialConvolution: 0.16746218502522 cudnn.SpatialConvolution: 0.14719647169113 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.085023000836372 nn.Linear: 0.26512148976326] nn.Sequential: [nn.Linear: 0.02125409245491 nn.Linear: 0.048379216343164]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0001819371516262 cudnn.SpatialConvolution: 4.9276233173808e-05 cudnn.SpatialConvolution: 7.6949533456138e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 9.5984998710988e-06 nn.Linear: 0.00069410968010231] nn.Sequential: [nn.Linear: 4.603270503703e-06 nn.Linear: 0.00019077688500329]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0028956467285752 cudnn.SpatialConvolution: 0.0030787768773735 cudnn.SpatialConvolution: 0.0029486448038369 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0010507522383705 nn.Linear: 0.0056658098474145] nn.Sequential: [nn.Linear: 0.0007145285489969 nn.Linear: 0.0018389991018921]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	100000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.037894922014277 cudnn.SpatialConvolution: 0.023526566975081 cudnn.SpatialConvolution: 0.021956492671613 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089899948171414 nn.Linear: 0.043045438674815] nn.Sequential: [nn.Linear: 0.0089388064276062 nn.Linear: 0.021178573223954]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.22298111021519 cudnn.SpatialConvolution: 0.20256824791431 cudnn.SpatialConvolution: 0.16121833026409 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.08659403026104 nn.Linear: 0.2685421705246] nn.Sequential: [nn.Linear: 0.022903744131327 nn.Linear: 0.049873393028975]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00033757028079064 cudnn.SpatialConvolution: 0.00010565924405999 cudnn.SpatialConvolution: 9.781101097237e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 8.8555744486048e-06 nn.Linear: 0.00024996944379174] nn.Sequential: [nn.Linear: 4.4539748763135e-06 nn.Linear: 0.00011574665448745]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0099888257682323 cudnn.SpatialConvolution: 0.0091637279838324 cudnn.SpatialConvolution: 0.0044631836935878 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0014859675429761 nn.Linear: 0.0016339250141755] nn.Sequential: [nn.Linear: 0.00076821650145575 nn.Linear: 0.0010322800371796]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.12733769017458	TD error	0.018593940004706	Qmax	1
+
+Steps: 100000 (frames: 400000), reward: 7.73, epsilon: 0.05, lr: 0.002, training time: 1615s, training rate: 247fps, testing time: 69s, testing rate: 285fps,  num. ep.: 86,  num. rewards: 5000
+
+Epoch goals: 1 / 86
+Steps: 	110000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.038810696043292 cudnn.SpatialConvolution: 0.023732486065429 cudnn.SpatialConvolution: 0.022096838290677 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0089956427814516 nn.Linear: 0.043073726629103] nn.Sequential: [nn.Linear: 0.008939448900015 nn.Linear: 0.021381766553097]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.23886063694954 cudnn.SpatialConvolution: 0.22468131780624 cudnn.SpatialConvolution: 0.17678117752075 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.091754853725433 nn.Linear: 0.26393112540245] nn.Sequential: [nn.Linear: 0.027607770636678 nn.Linear: 0.050575874745846]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0013992207971379 cudnn.SpatialConvolution: 0.00031241775270861 cudnn.SpatialConvolution: 0.00029087914126825 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.2121288015382e-05 nn.Linear: 0.0019198633491091] nn.Sequential: [nn.Linear: 8.877922244893e-06 nn.Linear: 0.00038561998038003]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.043511014431715 cudnn.SpatialConvolution: 0.030690658837557 cudnn.SpatialConvolution: 0.019791074097157 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0072800810448825 nn.Linear: 0.014177634380758] nn.Sequential: [nn.Linear: 0.0015711236046627 nn.Linear: 0.003518505487591]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	120000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.039707806532395 cudnn.SpatialConvolution: 0.023958604857704 cudnn.SpatialConvolution: 0.022226641868987 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090013125078503 nn.Linear: 0.043158366125642] nn.Sequential: [nn.Linear: 0.0089404053565495 nn.Linear: 0.021724454773455]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.26666480302811 cudnn.SpatialConvolution: 0.27577245235443 cudnn.SpatialConvolution: 0.19102449715137 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.094887174665928 nn.Linear: 0.26311194896698] nn.Sequential: [nn.Linear: 0.032045789062977 nn.Linear: 0.054767321795225]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00069705576069987 cudnn.SpatialConvolution: 0.00018653062214227 cudnn.SpatialConvolution: 0.00015654300170278 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.0634499435046e-05 nn.Linear: 0.00091628605571646] nn.Sequential: [nn.Linear: 9.1186225739182e-06 nn.Linear: 0.00047130008402211]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.016248408704996 cudnn.SpatialConvolution: 0.027866238728166 cudnn.SpatialConvolution: 0.01546273380518 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.010117219761014 nn.Linear: 0.009253622032702] nn.Sequential: [nn.Linear: 0.0027898603584617 nn.Linear: 0.0052018682472408]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Saved:	DQN3_0_1_HFO_FULL_Y1141.t7
+Steps: 	130000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.040332126732856 cudnn.SpatialConvolution: 0.024100364538035 cudnn.SpatialConvolution: 0.022298577695696 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090040164519426 nn.Linear: 0.042521014757639] nn.Sequential: [nn.Linear: 0.008941143849591 nn.Linear: 0.021897112779886]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.31073015928268 cudnn.SpatialConvolution: 0.31662279367447 cudnn.SpatialConvolution: 0.2110583037138 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.092223405838013 nn.Linear: 0.25676146149635] nn.Sequential: [nn.Linear: 0.034794643521309 nn.Linear: 0.057995975017548]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0006790437479731 cudnn.SpatialConvolution: 0.00019679451352991 cudnn.SpatialConvolution: 0.00025049490453617 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.9338309378393e-05 nn.Linear: 0.0037829727167046] nn.Sequential: [nn.Linear: 1.3676638438686e-05 nn.Linear: 0.00051984810193134]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.017742104828358 cudnn.SpatialConvolution: 0.025773843750358 cudnn.SpatialConvolution: 0.02710229344666 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.012417079880834 nn.Linear: 0.032039485871792] nn.Sequential: [nn.Linear: 0.0035338911693543 nn.Linear: 0.0055252849124372]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	140000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.04098504179753 cudnn.SpatialConvolution: 0.024256244021164 cudnn.SpatialConvolution: 0.022398582220457 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090082431056476 nn.Linear: 0.041963631423179] nn.Sequential: [nn.Linear: 0.008941553454964 nn.Linear: 0.021827465444595]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.36086079478264 cudnn.SpatialConvolution: 0.3398876786232 cudnn.SpatialConvolution: 0.22798532247543 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.084572352468967 nn.Linear: 0.23782315850258] nn.Sequential: [nn.Linear: 0.03633489459753 nn.Linear: 0.059869952499866]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0058413328539104 cudnn.SpatialConvolution: 0.001137271123763 cudnn.SpatialConvolution: 0.0010002798916042 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.3828873110375e-05 nn.Linear: 0.008107773060364] nn.Sequential: [nn.Linear: 2.0608825136025e-05 nn.Linear: 0.001389008049253]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.25349020957947 cudnn.SpatialConvolution: 0.29194578528404 cudnn.SpatialConvolution: 0.11159570515156 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.041073583066463 nn.Linear: 0.079582236707211] nn.Sequential: [nn.Linear: 0.0083400206640363 nn.Linear: 0.021660029888153]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	150000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.041710220140281 cudnn.SpatialConvolution: 0.024406944208111 cudnn.SpatialConvolution: 0.022510825340292 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.009012161998075 nn.Linear: 0.04115654081582] nn.Sequential: [nn.Linear: 0.0089422181642895 nn.Linear: 0.021953744493565]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.38685643672943 cudnn.SpatialConvolution: 0.36253520846367 cudnn.SpatialConvolution: 0.23100101947784 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.081089720129967 nn.Linear: 0.22474481165409] nn.Sequential: [nn.Linear: 0.040952820330858 nn.Linear: 0.064573749899864]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00080714773622285 cudnn.SpatialConvolution: 0.00014730716731655 cudnn.SpatialConvolution: 0.00010510164349219 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.0646565224107e-05 nn.Linear: 0.0025132386975119] nn.Sequential: [nn.Linear: 1.0043759883413e-05 nn.Linear: 0.00048132599334221]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.014893652871251 cudnn.SpatialConvolution: 0.016085995361209 cudnn.SpatialConvolution: 0.013002460822463 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0043665654957294 nn.Linear: 0.019845359027386] nn.Sequential: [nn.Linear: 0.0023156013339758 nn.Linear: 0.0054814731702209]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	160000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.042457650999607 cudnn.SpatialConvolution: 0.024577218714818 cudnn.SpatialConvolution: 0.022608114050209 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090153810197525 nn.Linear: 0.039256939052549] nn.Sequential: [nn.Linear: 0.0089429203888821 nn.Linear: 0.022078084177236]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.42730525135994 cudnn.SpatialConvolution: 0.3732518851757 cudnn.SpatialConvolution: 0.23236677050591 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.086400002241135 nn.Linear: 0.20642112195492] nn.Sequential: [nn.Linear: 0.043235685676336 nn.Linear: 0.069306805729866]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00024949078485373 cudnn.SpatialConvolution: 6.200954352895e-05 cudnn.SpatialConvolution: 8.1720459355289e-05 nn.ConcatTable: [nn.Sequential: [nn.Linear: 1.0602375494599e-05 nn.Linear: 0.00030830532301385] nn.Sequential: [nn.Linear: 8.5294993559885e-06 nn.Linear: 0.00034952766509163]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0059109502471983 cudnn.SpatialConvolution: 0.0065773436799645 cudnn.SpatialConvolution: 0.0071263015270233 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0026237536221743 nn.Linear: 0.0027544710319489] nn.Sequential: [nn.Linear: 0.0019593441393226 nn.Linear: 0.0044488753192127]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	170000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.04298954452891 cudnn.SpatialConvolution: 0.024712981528698 cudnn.SpatialConvolution: 0.022729067472995 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090195946046067 nn.Linear: 0.03863733829111] nn.Sequential: [nn.Linear: 0.008943766425665 nn.Linear: 0.022410322536264]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.43245726823807 cudnn.SpatialConvolution: 0.40200635790825 cudnn.SpatialConvolution: 0.24012789130211 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.082349814474583 nn.Linear: 0.20312462747097] nn.Sequential: [nn.Linear: 0.045147031545639 nn.Linear: 0.077069580554962]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0015447431335074 cudnn.SpatialConvolution: 0.00021681692643622 cudnn.SpatialConvolution: 0.00018249500826138 nn.ConcatTable: [nn.Sequential: [nn.Linear: 1.2953005770112e-05 nn.Linear: 0.00085309343665707] nn.Sequential: [nn.Linear: 6.5084334258058e-06 nn.Linear: 0.00034146315479009]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.040043916553259 cudnn.SpatialConvolution: 0.030278041958809 cudnn.SpatialConvolution: 0.028164438903332 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0065493616275489 nn.Linear: 0.0069161625579] nn.Sequential: [nn.Linear: 0.0020788332913071 nn.Linear: 0.0032066986896098]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	180000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.043568131920608 cudnn.SpatialConvolution: 0.024849130756216 cudnn.SpatialConvolution: 0.022840010258197 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090237058013292 nn.Linear: 0.038614288935321] nn.Sequential: [nn.Linear: 0.0089447512510643 nn.Linear: 0.022651762845953]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.42526984214783 cudnn.SpatialConvolution: 0.42160099744797 cudnn.SpatialConvolution: 0.25964426994324 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.080404661595821 nn.Linear: 0.1937987357378] nn.Sequential: [nn.Linear: 0.044620588421822 nn.Linear: 0.082420706748962]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0021090692901562 cudnn.SpatialConvolution: 0.00036010720126907 cudnn.SpatialConvolution: 0.00051100140660377 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.7474673959534e-05 nn.Linear: 0.0012173841497107] nn.Sequential: [nn.Linear: 1.8773895088535e-05 nn.Linear: 0.000744635983571]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050863396376371 cudnn.SpatialConvolution: 0.06440008431673 cudnn.SpatialConvolution: 0.047977052628994 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.016328740864992 nn.Linear: 0.008913298137486] nn.Sequential: [nn.Linear: 0.0053896312601864 nn.Linear: 0.010296036489308]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	190000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.044051969517901 cudnn.SpatialConvolution: 0.0249638020499 cudnn.SpatialConvolution: 0.022931157011763 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090283866816885 nn.Linear: 0.038494386353015] nn.Sequential: [nn.Linear: 0.0089459249744025 nn.Linear: 0.02298043784558]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.42787536978722 cudnn.SpatialConvolution: 0.42988187074661 cudnn.SpatialConvolution: 0.26278558373451 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.078156225383282 nn.Linear: 0.18377092480659] nn.Sequential: [nn.Linear: 0.050358548760414 nn.Linear: 0.093060813844204]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0045604133585637 cudnn.SpatialConvolution: 0.0011015862565136 cudnn.SpatialConvolution: 0.00093747719290584 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.4823935832484e-05 nn.Linear: 0.0058716905841551] nn.Sequential: [nn.Linear: 2.3970153109076e-05 nn.Linear: 0.0010614544230841]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.10608506202698 cudnn.SpatialConvolution: 0.11516320705414 cudnn.SpatialConvolution: 0.16034623980522 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.029892573133111 nn.Linear: 0.050638072192669] nn.Sequential: [nn.Linear: 0.0092546995729208 nn.Linear: 0.0099199078977108]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	200000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.044558061118806 cudnn.SpatialConvolution: 0.025076874850047 cudnn.SpatialConvolution: 0.02302834136385 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090344926571127 nn.Linear: 0.039095037497219] nn.Sequential: [nn.Linear: 0.0089471175333115 nn.Linear: 0.02330909632204]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.47299739718437 cudnn.SpatialConvolution: 0.43508049845695 cudnn.SpatialConvolution: 0.27064540982246 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.079326167702675 nn.Linear: 0.18656449019909] nn.Sequential: [nn.Linear: 0.059869013726711 nn.Linear: 0.10580243170261]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0036098456889026 cudnn.SpatialConvolution: 0.00070510857323428 cudnn.SpatialConvolution: 0.00052680436853419 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.1593228896902e-05 nn.Linear: 0.0036922278227299] nn.Sequential: [nn.Linear: 2.5888796958793e-05 nn.Linear: 0.00074334957265141]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.099466644227505 cudnn.SpatialConvolution: 0.10720733553171 cudnn.SpatialConvolution: 0.062997832894325 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.017878774553537 nn.Linear: 0.026517985388637] nn.Sequential: [nn.Linear: 0.0079534333199263 nn.Linear: 0.0091803940013051]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.15428415286541	TD error	0.027819889433682	Qmax	1
+
+Steps: 200000 (frames: 800000), reward: 39.67, epsilon: 0.05, lr: 0.002, training time: 1685s, training rate: 237fps, testing time: 69s, testing rate: 285fps,  num. ep.: 69,  num. rewards: 5000
+
+Epoch goals: 3 / 69
+Steps: 	210000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.044958356963647 cudnn.SpatialConvolution: 0.025165109853241 cudnn.SpatialConvolution: 0.023114928887407 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090408001874676 nn.Linear: 0.039488501849746] nn.Sequential: [nn.Linear: 0.0089482501618577 nn.Linear: 0.023524082185891]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.48945772647858 cudnn.SpatialConvolution: 0.44873633980751 cudnn.SpatialConvolution: 0.27954843640327 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.078011237084866 nn.Linear: 0.19622279703617] nn.Sequential: [nn.Linear: 0.063136480748653 nn.Linear: 0.11800894141197]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.014742179507916 cudnn.SpatialConvolution: 0.0024880254457452 cudnn.SpatialConvolution: 0.0016955795372066 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00021054790472954 nn.Linear: 0.016766618013607] nn.Sequential: [nn.Linear: 8.3027885618316e-05 nn.Linear: 0.0036993893535714]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.27720111608505 cudnn.SpatialConvolution: 0.41489282250404 cudnn.SpatialConvolution: 0.24535243213177 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.094480574131012 nn.Linear: 0.1220238879323] nn.Sequential: [nn.Linear: 0.056206915527582 nn.Linear: 0.046344645321369]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	220000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.045429637704755 cudnn.SpatialConvolution: 0.025273030008997 cudnn.SpatialConvolution: 0.023211170951838 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090477987311994 nn.Linear: 0.039704029456917] nn.Sequential: [nn.Linear: 0.0089498026700517 nn.Linear: 0.02383532645432]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.52644199132919 cudnn.SpatialConvolution: 0.44103652238846 cudnn.SpatialConvolution: 0.29905617237091 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.078056551516056 nn.Linear: 0.20085221529007] nn.Sequential: [nn.Linear: 0.073262020945549 nn.Linear: 0.13446734845638]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0013344027655063 cudnn.SpatialConvolution: 0.0002675303641386 cudnn.SpatialConvolution: 0.00033007505870596 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.8513006477418e-05 nn.Linear: 0.0023507332891143] nn.Sequential: [nn.Linear: 1.6317680851406e-05 nn.Linear: 0.00065279274678302]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.025812590494752 cudnn.SpatialConvolution: 0.035350061953068 cudnn.SpatialConvolution: 0.055073119699955 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.016668053343892 nn.Linear: 0.01927924528718] nn.Sequential: [nn.Linear: 0.0039073117077351 nn.Linear: 0.0079283667728305]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	230000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.045762833658125 cudnn.SpatialConvolution: 0.02535806277658 cudnn.SpatialConvolution: 0.023295226990407 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090540192879768 nn.Linear: 0.040327992050976] nn.Sequential: [nn.Linear: 0.0089517944144549 nn.Linear: 0.024427744454438]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.54292958974838 cudnn.SpatialConvolution: 0.45350804924965 cudnn.SpatialConvolution: 0.29937729239464 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.082506202161312 nn.Linear: 0.19879527390003] nn.Sequential: [nn.Linear: 0.073138184845448 nn.Linear: 0.14750976860523]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0082938779463065 cudnn.SpatialConvolution: 0.00077075931460835 cudnn.SpatialConvolution: 0.00085293250091681 nn.ConcatTable: [nn.Sequential: [nn.Linear: 8.7876779211337e-05 nn.Linear: 0.0041671871993695] nn.Sequential: [nn.Linear: 3.7734804179769e-05 nn.Linear: 0.0016014828250648]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.13839936256409 cudnn.SpatialConvolution: 0.1580847799778 cudnn.SpatialConvolution: 0.1320354193449 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.035945825278759 nn.Linear: 0.028414450585842] nn.Sequential: [nn.Linear: 0.017228027805686 nn.Linear: 0.019879568368196]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	240000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.046117251979146 cudnn.SpatialConvolution: 0.025438768875535 cudnn.SpatialConvolution: 0.023389638403595 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090622957770264 nn.Linear: 0.041930201181728] nn.Sequential: [nn.Linear: 0.008953458939354 nn.Linear: 0.024803673778879]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.56022411584854 cudnn.SpatialConvolution: 0.4462978541851 cudnn.SpatialConvolution: 0.30951228737831 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.083482690155506 nn.Linear: 0.19836483895779] nn.Sequential: [nn.Linear: 0.069535404443741 nn.Linear: 0.1518492847681]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.005752263588945 cudnn.SpatialConvolution: 0.0011851934440243 cudnn.SpatialConvolution: 0.0012651067002685 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012033284989383 nn.Linear: 0.012168121177379] nn.Sequential: [nn.Linear: 5.2897364283324e-05 nn.Linear: 0.0023351545615804]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.099675633013248 cudnn.SpatialConvolution: 0.16765692830086 cudnn.SpatialConvolution: 0.1150017529726 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.048947636038065 nn.Linear: 0.081885144114494] nn.Sequential: [nn.Linear: 0.021318173035979 nn.Linear: 0.020209891721606]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	250000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.046448916097283 cudnn.SpatialConvolution: 0.025518431926742 cudnn.SpatialConvolution: 0.02348049788011 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090701417574388 nn.Linear: 0.043168016673917] nn.Sequential: [nn.Linear: 0.0089547955711759 nn.Linear: 0.024994650778407]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.57301634550095 cudnn.SpatialConvolution: 0.44746363162994 cudnn.SpatialConvolution: 0.30736556649208 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.083293385803699 nn.Linear: 0.19260141253471] nn.Sequential: [nn.Linear: 0.069437280297279 nn.Linear: 0.15281862020493]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.002752289854117 cudnn.SpatialConvolution: 0.00042274867516301 cudnn.SpatialConvolution: 0.00042643768467268 nn.ConcatTable: [nn.Sequential: [nn.Linear: 5.0903835037837e-05 nn.Linear: 0.0059939628081179] nn.Sequential: [nn.Linear: 1.7140195937046e-05 nn.Linear: 0.00063659122751824]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.046319425106049 cudnn.SpatialConvolution: 0.062990315258503 cudnn.SpatialConvolution: 0.053791586309671 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.021727219223976 nn.Linear: 0.040325809270144] nn.Sequential: [nn.Linear: 0.0090338196605444 nn.Linear: 0.01093664765358]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Saved:	DQN3_0_1_HFO_FULL_Y1141.t7
+Steps: 	260000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.046819658113901 cudnn.SpatialConvolution: 0.025594176601444 cudnn.SpatialConvolution: 0.023568300002382 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0090780588387555 nn.Linear: 0.043813450546565] nn.Sequential: [nn.Linear: 0.00895687259583 nn.Linear: 0.025397139479022]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.59934514760971 cudnn.SpatialConvolution: 0.44640097022057 cudnn.SpatialConvolution: 0.31179192662239 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.081581369042397 nn.Linear: 0.19398975372314] nn.Sequential: [nn.Linear: 0.070512108504772 nn.Linear: 0.16218557953835]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0035170162333863 cudnn.SpatialConvolution: 0.00097720876527867 cudnn.SpatialConvolution: 0.0010393567805874 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012524152937487 nn.Linear: 0.0089052438704738] nn.Sequential: [nn.Linear: 4.2860480471478e-05 nn.Linear: 0.0023126410913272]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.09451100230217 cudnn.SpatialConvolution: 0.087215967476368 cudnn.SpatialConvolution: 0.074077777564526 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.046991247683764 nn.Linear: 0.072395578026772] nn.Sequential: [nn.Linear: 0.018423393368721 nn.Linear: 0.033929716795683]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	270000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.047122012374202 cudnn.SpatialConvolution: 0.025665252179295 cudnn.SpatialConvolution: 0.023641881903482 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.009085450117262 nn.Linear: 0.045025576523507] nn.Sequential: [nn.Linear: 0.0089589295760794 nn.Linear: 0.025821078762687]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.59921419620514 cudnn.SpatialConvolution: 0.45452919602394 cudnn.SpatialConvolution: 0.318334877491 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.082718499004841 nn.Linear: 0.20179651677608] nn.Sequential: [nn.Linear: 0.068284824490547 nn.Linear: 0.16960318386555]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00049972635582103 cudnn.SpatialConvolution: 0.000122693604905 cudnn.SpatialConvolution: 0.00014203830108287 nn.ConcatTable: [nn.Sequential: [nn.Linear: 2.9762391746412e-05 nn.Linear: 0.0011850164009247] nn.Sequential: [nn.Linear: 1.2921462503498e-05 nn.Linear: 0.00042793256930836]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0093066859990358 cudnn.SpatialConvolution: 0.014545410871506 cudnn.SpatialConvolution: 0.0085266288369894 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.013393979519606 nn.Linear: 0.0079315882176161] nn.Sequential: [nn.Linear: 0.0050124539993703 nn.Linear: 0.0057772886939347]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	280000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.047426374179994 cudnn.SpatialConvolution: 0.025742140140215 cudnn.SpatialConvolution: 0.023731810252691 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.009094747979035 nn.Linear: 0.046988077492117] nn.Sequential: [nn.Linear: 0.0089610737083585 nn.Linear: 0.026211796664597]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.60349726676941 cudnn.SpatialConvolution: 0.45888563990593 cudnn.SpatialConvolution: 0.32485407590866 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.08331772685051 nn.Linear: 0.2078028023243] nn.Sequential: [nn.Linear: 0.065138816833496 nn.Linear: 0.17551021277905]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0009589777530715 cudnn.SpatialConvolution: 0.00026624300451672 cudnn.SpatialConvolution: 0.0002915463109675 nn.ConcatTable: [nn.Sequential: [nn.Linear: 5.122164661086e-05 nn.Linear: 0.0047030286500505] nn.Sequential: [nn.Linear: 1.8930522286414e-05 nn.Linear: 0.00062870930970867]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.016600016504526 cudnn.SpatialConvolution: 0.029607728123665 cudnn.SpatialConvolution: 0.020177403464913 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.022943733260036 nn.Linear: 0.036569308489561] nn.Sequential: [nn.Linear: 0.0059272097423673 nn.Linear: 0.0054626017808914]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	290000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.047733119563817 cudnn.SpatialConvolution: 0.025819915807777 cudnn.SpatialConvolution: 0.023843347200062 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091060650903884 nn.Linear: 0.048942667057361] nn.Sequential: [nn.Linear: 0.0089631170536379 nn.Linear: 0.026464724100094]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.60130214691162 cudnn.SpatialConvolution: 0.47050976753235 cudnn.SpatialConvolution: 0.32621392607689 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.08583290874958 nn.Linear: 0.21060526371002] nn.Sequential: [nn.Linear: 0.062590889632702 nn.Linear: 0.17350932955742]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0036417869362634 cudnn.SpatialConvolution: 0.00067582019380508 cudnn.SpatialConvolution: 0.00074604010081679 nn.ConcatTable: [nn.Sequential: [nn.Linear: 9.81568929681e-05 nn.Linear: 0.0063445065837351] nn.Sequential: [nn.Linear: 4.0483469830324e-05 nn.Linear: 0.0013244462762376]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.056022580713034 cudnn.SpatialConvolution: 0.084163419902325 cudnn.SpatialConvolution: 0.09222798794508 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.046387176960707 nn.Linear: 0.046938005834818] nn.Sequential: [nn.Linear: 0.02493085898459 nn.Linear: 0.01476807706058]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	300000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.04801074209126 cudnn.SpatialConvolution: 0.025888603059297 cudnn.SpatialConvolution: 0.023926263402253 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091162859322015 nn.Linear: 0.04988106715254] nn.Sequential: [nn.Linear: 0.0089649283210956 nn.Linear: 0.026625159957649]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.59930717945099 cudnn.SpatialConvolution: 0.48065254092216 cudnn.SpatialConvolution: 0.32499384880066 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.087867960333824 nn.Linear: 0.20566335320473] nn.Sequential: [nn.Linear: 0.059913270175457 nn.Linear: 0.17743270099163]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00074347111556583 cudnn.SpatialConvolution: 0.00020168072982086 cudnn.SpatialConvolution: 0.00025086817538495 nn.ConcatTable: [nn.Sequential: [nn.Linear: 5.2393357081837e-05 nn.Linear: 0.0040570774433848] nn.Sequential: [nn.Linear: 1.8568080175563e-05 nn.Linear: 0.00056968338467652]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.015056387521327 cudnn.SpatialConvolution: 0.026375425979495 cudnn.SpatialConvolution: 0.025645703077316 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.023685602471232 nn.Linear: 0.028379013761878] nn.Sequential: [nn.Linear: 0.0064714821055532 nn.Linear: 0.0048790583387017]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.2356101475358	TD error	0.038262947492301	Qmax	1
+
+Steps: 300000 (frames: 1200000), reward: 121.89, epsilon: 0.05, lr: 0.002, training time: 1704s, training rate: 234fps, testing time: 71s, testing rate: 279fps,  num. ep.: 112,  num. rewards: 5000
+
+Epoch goals: 14 / 112
+Steps: 	310000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.048206293823023 cudnn.SpatialConvolution: 0.02593405692037 cudnn.SpatialConvolution: 0.023986194830771 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091241732837541 nn.Linear: 0.050378986445438] nn.Sequential: [nn.Linear: 0.0089672793886634 nn.Linear: 0.027102070632454]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.60103589296341 cudnn.SpatialConvolution: 0.48599916696548 cudnn.SpatialConvolution: 0.33437144756317 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.090285450220108 nn.Linear: 0.20639106631279] nn.Sequential: [nn.Linear: 0.05833538621664 nn.Linear: 0.18075239658356]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00094704462884073 cudnn.SpatialConvolution: 0.00022138915756225 cudnn.SpatialConvolution: 0.00030207835115382 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.1574342467325e-05 nn.Linear: 0.0047530382582081] nn.Sequential: [nn.Linear: 1.9290513933592e-05 nn.Linear: 0.00050992776572652]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.023401299491525 cudnn.SpatialConvolution: 0.020753968507051 cudnn.SpatialConvolution: 0.027997262775898 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.022130805999041 nn.Linear: 0.040785446763039] nn.Sequential: [nn.Linear: 0.0051956870593131 nn.Linear: 0.0041752872057259]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	320000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.048420850573204 cudnn.SpatialConvolution: 0.025984964941124 cudnn.SpatialConvolution: 0.024064986715961 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091341010501434 nn.Linear: 0.051841853912293] nn.Sequential: [nn.Linear: 0.0089693342883072 nn.Linear: 0.027412950830081]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.60978126525879 cudnn.SpatialConvolution: 0.48827078938484 cudnn.SpatialConvolution: 0.33447772264481 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.093152023851871 nn.Linear: 0.20833165943623] nn.Sequential: [nn.Linear: 0.05825437605381 nn.Linear: 0.17846408486366]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0014237813137291 cudnn.SpatialConvolution: 0.00029507296457772 cudnn.SpatialConvolution: 0.00043448650585846 nn.ConcatTable: [nn.Sequential: [nn.Linear: 7.5057761931504e-05 nn.Linear: 0.0034298363195269] nn.Sequential: [nn.Linear: 3.4841725249746e-05 nn.Linear: 0.0013692442578884]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.02836642973125 cudnn.SpatialConvolution: 0.037389852106571 cudnn.SpatialConvolution: 0.034239917993546 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.040154237300158 nn.Linear: 0.025767516344786] nn.Sequential: [nn.Linear: 0.01181561127305 nn.Linear: 0.014861765317619]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	330000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.048680490875636 cudnn.SpatialConvolution: 0.026038699155514 cudnn.SpatialConvolution: 0.024132228120097 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091450785135211 nn.Linear: 0.053400244761207] nn.Sequential: [nn.Linear: 0.0089711273963321 nn.Linear: 0.027506850229521]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.61722999811172 cudnn.SpatialConvolution: 0.50954794883728 cudnn.SpatialConvolution: 0.33208927512169 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.094807676970959 nn.Linear: 0.21721315383911] nn.Sequential: [nn.Linear: 0.058425590395927 nn.Linear: 0.17875452339649]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0018614220219504 cudnn.SpatialConvolution: 0.00034632425162457 cudnn.SpatialConvolution: 0.00037436256772625 nn.ConcatTable: [nn.Sequential: [nn.Linear: 7.4805530886407e-05 nn.Linear: 0.0079099154285069] nn.Sequential: [nn.Linear: 2.1270450553744e-05 nn.Linear: 0.00087066094425066]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.028425503522158 cudnn.SpatialConvolution: 0.043268021196127 cudnn.SpatialConvolution: 0.034644596278667 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.029519211500883 nn.Linear: 0.070775076746941] nn.Sequential: [nn.Linear: 0.0066783051006496 nn.Linear: 0.017924401909113]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	340000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.048845364522009 cudnn.SpatialConvolution: 0.026079422696343 cudnn.SpatialConvolution: 0.024191706560866 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091546340268305 nn.Linear: 0.054484842279606] nn.Sequential: [nn.Linear: 0.0089732248659451 nn.Linear: 0.027679984122765]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.6167426109314 cudnn.SpatialConvolution: 0.52090108394623 cudnn.SpatialConvolution: 0.34430685639381 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.098397478461266 nn.Linear: 0.22682695090771] nn.Sequential: [nn.Linear: 0.05961649492383 nn.Linear: 0.17618069052696]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0010658927426059 cudnn.SpatialConvolution: 0.0002173101724947 cudnn.SpatialConvolution: 0.00027876593787758 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.7179866231266e-05 nn.Linear: 0.0042200381852142] nn.Sequential: [nn.Linear: 2.5894357134196e-05 nn.Linear: 0.001062171009945]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.021293193101883 cudnn.SpatialConvolution: 0.035162605345249 cudnn.SpatialConvolution: 0.034542419016361 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.037524227052927 nn.Linear: 0.037454977631569] nn.Sequential: [nn.Linear: 0.013165088370442 nn.Linear: 0.015520241111517]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	350000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.048992263986659 cudnn.SpatialConvolution: 0.02611461126815 cudnn.SpatialConvolution: 0.024245942533295 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091645123775456 nn.Linear: 0.054777326311239] nn.Sequential: [nn.Linear: 0.008975197891016 nn.Linear: 0.027904981660826]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.61625254154205 cudnn.SpatialConvolution: 0.51117885112762 cudnn.SpatialConvolution: 0.35497197508812 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.098793484270573 nn.Linear: 0.23085856437683] nn.Sequential: [nn.Linear: 0.063222259283066 nn.Linear: 0.18197870254517]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0025804738099072 cudnn.SpatialConvolution: 0.00064536231767367 cudnn.SpatialConvolution: 0.0009056960267149 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00011932927112689 nn.Linear: 0.0098908243992077] nn.Sequential: [nn.Linear: 4.1813709709673e-05 nn.Linear: 0.0015426704746669]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.048554934561253 cudnn.SpatialConvolution: 0.11474311351776 cudnn.SpatialConvolution: 0.077352724969387 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.083586230874062 nn.Linear: 0.090548820793629] nn.Sequential: [nn.Linear: 0.018808754161 nn.Linear: 0.013166782446206]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	360000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.049198558312231 cudnn.SpatialConvolution: 0.026167065759903 cudnn.SpatialConvolution: 0.024315520817615 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091749719493246 nn.Linear: 0.056179158730629] nn.Sequential: [nn.Linear: 0.008978490509686 nn.Linear: 0.028449518605594]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.62650525569916 cudnn.SpatialConvolution: 0.51010286808014 cudnn.SpatialConvolution: 0.35505878925323 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10057721287012 nn.Linear: 0.23562493920326] nn.Sequential: [nn.Linear: 0.063552260398865 nn.Linear: 0.18630166351795]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00076068958549693 cudnn.SpatialConvolution: 0.00016868109841087 cudnn.SpatialConvolution: 0.00021556331340568 nn.ConcatTable: [nn.Sequential: [nn.Linear: 4.5524761122809e-05 nn.Linear: 0.0045636814360819] nn.Sequential: [nn.Linear: 1.2609834436282e-05 nn.Linear: 0.0004321756026023]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.017498776316643 cudnn.SpatialConvolution: 0.020391015335917 cudnn.SpatialConvolution: 0.017126778140664 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.011920208111405 nn.Linear: 0.047739762812853] nn.Sequential: [nn.Linear: 0.0047821193002164 nn.Linear: 0.0044000158086419]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	370000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.049393421222519 cudnn.SpatialConvolution: 0.026222954555918 cudnn.SpatialConvolution: 0.024393691918607 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091864721757939 nn.Linear: 0.056927992715355] nn.Sequential: [nn.Linear: 0.0089819322680011 nn.Linear: 0.028968541210351]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.63613033294678 cudnn.SpatialConvolution: 0.51266664266586 cudnn.SpatialConvolution: 0.3572039604187 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10390537232161 nn.Linear: 0.23802554607391] nn.Sequential: [nn.Linear: 0.069930978119373 nn.Linear: 0.18822033703327]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0038136219042306 cudnn.SpatialConvolution: 0.00051995150498036 cudnn.SpatialConvolution: 0.00063346991128681 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00015061577880193 nn.Linear: 0.0091018549670112] nn.Sequential: [nn.Linear: 5.9788729329311e-05 nn.Linear: 0.0022015764903193]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054884757846594 cudnn.SpatialConvolution: 0.059522543102503 cudnn.SpatialConvolution: 0.058200944215059 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.040305782109499 nn.Linear: 0.067261040210724] nn.Sequential: [nn.Linear: 0.024159546941519 nn.Linear: 0.019217260181904]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Saved:	DQN3_0_1_HFO_FULL_Y1141.t7
+Steps: 	380000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.049525570062128 cudnn.SpatialConvolution: 0.026258409072562 cudnn.SpatialConvolution: 0.024444779740023 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0091973650652643 nn.Linear: 0.057403359868061] nn.Sequential: [nn.Linear: 0.0089844690822501 nn.Linear: 0.029094857222818]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.64264100790024 cudnn.SpatialConvolution: 0.53291797637939 cudnn.SpatialConvolution: 0.35487401485443 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10368228703737 nn.Linear: 0.24090488255024] nn.Sequential: [nn.Linear: 0.070658028125763 nn.Linear: 0.18772235512733]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0015156670417976 cudnn.SpatialConvolution: 0.00049612406619124 cudnn.SpatialConvolution: 0.00050501001123044 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.7442330759595e-05 nn.Linear: 0.0064417133574115] nn.Sequential: [nn.Linear: 2.2216014653192e-05 nn.Linear: 0.00099657978573734]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.03041067160666 cudnn.SpatialConvolution: 0.041877441108227 cudnn.SpatialConvolution: 0.042446799576283 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.028148906305432 nn.Linear: 0.059519190341234] nn.Sequential: [nn.Linear: 0.0090996446087956 nn.Linear: 0.014637095853686]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	390000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.049639012041088 cudnn.SpatialConvolution: 0.026295906397573 cudnn.SpatialConvolution: 0.024503423465431 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092081300012794 nn.Linear: 0.057507855945289] nn.Sequential: [nn.Linear: 0.0089871694303906 nn.Linear: 0.029309806027683]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.63636666536331 cudnn.SpatialConvolution: 0.53122675418854 cudnn.SpatialConvolution: 0.35284841060638 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10316494852304 nn.Linear: 0.24184772372246] nn.Sequential: [nn.Linear: 0.072666987776756 nn.Linear: 0.1855710297823]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0013147281350353 cudnn.SpatialConvolution: 0.00034231033938707 cudnn.SpatialConvolution: 0.00039016409593407 nn.ConcatTable: [nn.Sequential: [nn.Linear: 5.1315099555581e-05 nn.Linear: 0.0031062129626284] nn.Sequential: [nn.Linear: 1.674505942104e-05 nn.Linear: 0.00054372828663327]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.028325732797384 cudnn.SpatialConvolution: 0.032460100948811 cudnn.SpatialConvolution: 0.026399927213788 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.019678696990013 nn.Linear: 0.030927684158087] nn.Sequential: [nn.Linear: 0.010181087069213 nn.Linear: 0.0065089366398752]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	400000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.049835988985831 cudnn.SpatialConvolution: 0.026352493368872 cudnn.SpatialConvolution: 0.024578280790007 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092212460824586 nn.Linear: 0.058998687752364] nn.Sequential: [nn.Linear: 0.0089905003393681 nn.Linear: 0.02963388233125]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.65013086795807 cudnn.SpatialConvolution: 0.52921086549759 cudnn.SpatialConvolution: 0.35855367779732 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10601951181889 nn.Linear: 0.23969706892967] nn.Sequential: [nn.Linear: 0.071993842720985 nn.Linear: 0.1828420907259]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00063303582013662 cudnn.SpatialConvolution: 0.00015116843739191 cudnn.SpatialConvolution: 0.00017389106431099 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.6863028465738e-05 nn.Linear: 0.0019780285972588] nn.Sequential: [nn.Linear: 1.2460199912167e-05 nn.Linear: 0.00042778262768981]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.011465930379927 cudnn.SpatialConvolution: 0.013191607780755 cudnn.SpatialConvolution: 0.016862373799086 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.030771639198065 nn.Linear: 0.020618259906769] nn.Sequential: [nn.Linear: 0.006672874558717 nn.Linear: 0.0089668724685907]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.35821761098504	TD error	0.052413130491972	Qmax	1
+
+Steps: 400000 (frames: 1600000), reward: 68.88, epsilon: 0.05, lr: 0.002, training time: 1697s, training rate: 235fps, testing time: 73s, testing rate: 272fps,  num. ep.: 153,  num. rewards: 5000
+
+Epoch goals: 11 / 153
+Steps: 	410000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050034219273204 cudnn.SpatialConvolution: 0.026403860095067 cudnn.SpatialConvolution: 0.024642821231233 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092333548240457 nn.Linear: 0.05950577921277] nn.Sequential: [nn.Linear: 0.0089939999830396 nn.Linear: 0.030057919761745]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.65282356739044 cudnn.SpatialConvolution: 0.53522843122482 cudnn.SpatialConvolution: 0.35713142156601 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10289506614208 nn.Linear: 0.24257118999958] nn.Sequential: [nn.Linear: 0.070503108203411 nn.Linear: 0.18630132079124]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0033641877856129 cudnn.SpatialConvolution: 0.0011859497778373 cudnn.SpatialConvolution: 0.0015877434056624 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00020816281827376 nn.Linear: 0.012513718124439] nn.Sequential: [nn.Linear: 7.9292983318429e-05 nn.Linear: 0.0041442497701482]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.067432396113873 cudnn.SpatialConvolution: 0.13806945085526 cudnn.SpatialConvolution: 0.1259510666132 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.14079731702805 nn.Linear: 0.15984807908535] nn.Sequential: [nn.Linear: 0.065635614097118 nn.Linear: 0.07174476981163]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	420000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050198363458241 cudnn.SpatialConvolution: 0.026463008193382 cudnn.SpatialConvolution: 0.024721706044621 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092462232703714 nn.Linear: 0.060831453944704] nn.Sequential: [nn.Linear: 0.0089974067743679 nn.Linear: 0.030434111929726]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.64915758371353 cudnn.SpatialConvolution: 0.5386204123497 cudnn.SpatialConvolution: 0.36932700872421 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.1054902523756 nn.Linear: 0.23889091610909] nn.Sequential: [nn.Linear: 0.076859600841999 nn.Linear: 0.18118186295033]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0025279570438526 cudnn.SpatialConvolution: 0.00093523457662133 cudnn.SpatialConvolution: 0.001107684295099 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012810019126931 nn.Linear: 0.0072390481799887] nn.Sequential: [nn.Linear: 5.6293454162334e-05 nn.Linear: 0.0024584499768109]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.044131565839052 cudnn.SpatialConvolution: 0.10033975541592 cudnn.SpatialConvolution: 0.10014486312866 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.063003450632095 nn.Linear: 0.1030106022954] nn.Sequential: [nn.Linear: 0.043305527418852 nn.Linear: 0.025908403098583]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	430000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050328915354137 cudnn.SpatialConvolution: 0.026512780775401 cudnn.SpatialConvolution: 0.024796770563848 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092585080095715 nn.Linear: 0.061086974629561] nn.Sequential: [nn.Linear: 0.0090006900423593 nn.Linear: 0.030864571034136]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.65008252859116 cudnn.SpatialConvolution: 0.54600638151169 cudnn.SpatialConvolution: 0.37187790870667 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.10560666024685 nn.Linear: 0.23986285924911] nn.Sequential: [nn.Linear: 0.082741364836693 nn.Linear: 0.18441000580788]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00090368478600744 cudnn.SpatialConvolution: 0.00022390557083093 cudnn.SpatialConvolution: 0.00025340671140622 nn.ConcatTable: [nn.Sequential: [nn.Linear: 4.5407378313789e-05 nn.Linear: 0.0036291929757475] nn.Sequential: [nn.Linear: 1.541261189155e-05 nn.Linear: 0.00053645361385638]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.014900774694979 cudnn.SpatialConvolution: 0.031212186440825 cudnn.SpatialConvolution: 0.023295488208532 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.014955813996494 nn.Linear: 0.03231767565012] nn.Sequential: [nn.Linear: 0.0071219415403903 nn.Linear: 0.011311309412122]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	440000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050491119664467 cudnn.SpatialConvolution: 0.026568695511049 cudnn.SpatialConvolution: 0.024874423800549 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092717722417537 nn.Linear: 0.061717530636827] nn.Sequential: [nn.Linear: 0.0090046835718268 nn.Linear: 0.031347873976852]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.66445606946945 cudnn.SpatialConvolution: 0.5569903254509 cudnn.SpatialConvolution: 0.39009565114975 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.12155763059855 nn.Linear: 0.24459719657898] nn.Sequential: [nn.Linear: 0.082841791212559 nn.Linear: 0.18537411093712]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00086102536911834 cudnn.SpatialConvolution: 0.00022097053868947 cudnn.SpatialConvolution: 0.00029061074000109 nn.ConcatTable: [nn.Sequential: [nn.Linear: 7.3551677741723e-05 nn.Linear: 0.0074505253673722] nn.Sequential: [nn.Linear: 1.9899462393896e-05 nn.Linear: 0.00081024497788003]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.015587104484439 cudnn.SpatialConvolution: 0.012222519144416 cudnn.SpatialConvolution: 0.0269506983459 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.028581734746695 nn.Linear: 0.097139246761799] nn.Sequential: [nn.Linear: 0.0056403358466923 nn.Linear: 0.017962586134672]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	450000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050654762465877 cudnn.SpatialConvolution: 0.026620035525705 cudnn.SpatialConvolution: 0.024942006981874 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092839957665168 nn.Linear: 0.062043709078694] nn.Sequential: [nn.Linear: 0.0090084897894057 nn.Linear: 0.0317269418329]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.67922884225845 cudnn.SpatialConvolution: 0.55552840232849 cudnn.SpatialConvolution: 0.39018779993057 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.13220167160034 nn.Linear: 0.24325540661812] nn.Sequential: [nn.Linear: 0.080881588160992 nn.Linear: 0.18473429977894]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.003395144319461 cudnn.SpatialConvolution: 0.00099203678166758 cudnn.SpatialConvolution: 0.0011244726781426 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00014116098866071 nn.Linear: 0.0060044860857245] nn.Sequential: [nn.Linear: 5.5480996532037e-05 nn.Linear: 0.0017050035572017]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.075568102300167 cudnn.SpatialConvolution: 0.103535592556 cudnn.SpatialConvolution: 0.095788784325123 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.061070047318935 nn.Linear: 0.032966610044241] nn.Sequential: [nn.Linear: 0.036403395235538 nn.Linear: 0.019209701567888]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	460000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050831347818019 cudnn.SpatialConvolution: 0.026685204086834 cudnn.SpatialConvolution: 0.025019813940179 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0092968818412903 nn.Linear: 0.061845536215742] nn.Sequential: [nn.Linear: 0.0090129017438619 nn.Linear: 0.032210462003372]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.69621139764786 cudnn.SpatialConvolution: 0.57017892599106 cudnn.SpatialConvolution: 0.38929057121277 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.14476218819618 nn.Linear: 0.24414592981339] nn.Sequential: [nn.Linear: 0.076650470495224 nn.Linear: 0.1842699944973]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0013747261156442 cudnn.SpatialConvolution: 0.00032580087605186 cudnn.SpatialConvolution: 0.00040390737645048 nn.ConcatTable: [nn.Sequential: [nn.Linear: 8.6306896875608e-05 nn.Linear: 0.0058431022884635] nn.Sequential: [nn.Linear: 3.2181705526158e-05 nn.Linear: 0.00096655159601305]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.022353490814567 cudnn.SpatialConvolution: 0.027626179158688 cudnn.SpatialConvolution: 0.022248623892665 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.023837441578507 nn.Linear: 0.058934710919857] nn.Sequential: [nn.Linear: 0.015368628315628 nn.Linear: 0.01178889349103]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	470000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.050944923822408 cudnn.SpatialConvolution: 0.026729742493979 cudnn.SpatialConvolution: 0.025088812320105 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093093536874101 nn.Linear: 0.062757111345036] nn.Sequential: [nn.Linear: 0.0090165206875022 nn.Linear: 0.032440401297343]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.69328153133392 cudnn.SpatialConvolution: 0.56781810522079 cudnn.SpatialConvolution: 0.38481965661049 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.15313655138016 nn.Linear: 0.23363207280636] nn.Sequential: [nn.Linear: 0.081050120294094 nn.Linear: 0.1873294711113]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0040600282416757 cudnn.SpatialConvolution: 0.0010702603008011 cudnn.SpatialConvolution: 0.0016407241532308 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00019900458183281 nn.Linear: 0.015660386459656] nn.Sequential: [nn.Linear: 9.3788991796079e-05 nn.Linear: 0.0039551454134712]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.091955929994583 cudnn.SpatialConvolution: 0.11379562318325 cudnn.SpatialConvolution: 0.13566672801971 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.14258372783661 nn.Linear: 0.13017757236958] nn.Sequential: [nn.Linear: 0.12401691824198 nn.Linear: 0.049841765314341]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	480000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051063433007777 cudnn.SpatialConvolution: 0.026778271513831 cudnn.SpatialConvolution: 0.025140958755046 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093198759796182 nn.Linear: 0.062774129297566] nn.Sequential: [nn.Linear: 0.0090205733589161 nn.Linear: 0.032950529109921]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.69615995883942 cudnn.SpatialConvolution: 0.55546969175339 cudnn.SpatialConvolution: 0.38292950391769 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.16317285597324 nn.Linear: 0.24814620614052] nn.Sequential: [nn.Linear: 0.08824261277914 nn.Linear: 0.19165645539761]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0015619002459738 cudnn.SpatialConvolution: 0.00032541891042651 cudnn.SpatialConvolution: 0.00041033673517888 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.6992173009939e-05 nn.Linear: 0.0059553526046781] nn.Sequential: [nn.Linear: 2.3212790291292e-05 nn.Linear: 0.00079266300973106]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.028718469664454 cudnn.SpatialConvolution: 0.041867628693581 cudnn.SpatialConvolution: 0.028108045458794 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.028660031035542 nn.Linear: 0.042509533464909] nn.Sequential: [nn.Linear: 0.014993133023381 nn.Linear: 0.01240021456033]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	490000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051209629620064 cudnn.SpatialConvolution: 0.026841745161186 cudnn.SpatialConvolution: 0.02521254977383 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093312642952385 nn.Linear: 0.063341919132739] nn.Sequential: [nn.Linear: 0.0090244096038803 nn.Linear: 0.033367011948419]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.69824838638306 cudnn.SpatialConvolution: 0.55081272125244 cudnn.SpatialConvolution: 0.37583220005035 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.16499496996403 nn.Linear: 0.25400876998901] nn.Sequential: [nn.Linear: 0.081421203911304 nn.Linear: 0.19203531742096]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0019619719915797 cudnn.SpatialConvolution: 0.00043458945156524 cudnn.SpatialConvolution: 0.00082509169471907 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00014020307757674 nn.Linear: 0.0088513688538963] nn.Sequential: [nn.Linear: 5.9826059600641e-05 nn.Linear: 0.0018697339783174]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.033214334398508 cudnn.SpatialConvolution: 0.040363788604736 cudnn.SpatialConvolution: 0.066766381263733 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.056120932102203 nn.Linear: 0.097219578921795] nn.Sequential: [nn.Linear: 0.023522986099124 nn.Linear: 0.01947651617229]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	500000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051349812956964 cudnn.SpatialConvolution: 0.026904084705675 cudnn.SpatialConvolution: 0.025309697564256 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093455069289223 nn.Linear: 0.064588692904806] nn.Sequential: [nn.Linear: 0.0090294464580864 nn.Linear: 0.033824190302163]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.69808089733124 cudnn.SpatialConvolution: 0.56059837341309 cudnn.SpatialConvolution: 0.38786271214485 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.17174331843853 nn.Linear: 0.25809323787689] nn.Sequential: [nn.Linear: 0.081193119287491 nn.Linear: 0.1909544467926]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00059722034046122 cudnn.SpatialConvolution: 0.00015354837219224 cudnn.SpatialConvolution: 0.00021204245118934 nn.ConcatTable: [nn.Sequential: [nn.Linear: 4.1523888373176e-05 nn.Linear: 0.0017172530368925] nn.Sequential: [nn.Linear: 2.1660859480588e-05 nn.Linear: 0.00076670791744612]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.011859861202538 cudnn.SpatialConvolution: 0.014337066560984 cudnn.SpatialConvolution: 0.024393066763878 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.015213844366372 nn.Linear: 0.02113806642592] nn.Sequential: [nn.Linear: 0.010311126708984 nn.Linear: 0.012474540621042]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.57228134393692	TD error	0.075310769319534	Qmax	1
+
+Steps: 500000 (frames: 2000000), reward: 23.47, epsilon: 0.05, lr: 0.002, training time: 1701s, training rate: 235fps, testing time: 75s, testing rate: 265fps,  num. ep.: 199,  num. rewards: 5000
+
+Epoch goals: 5 / 199
+Saved:	DQN3_0_1_HFO_FULL_Y1141.t7
+Steps: 	510000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051568437742843 cudnn.SpatialConvolution: 0.026969344425036 cudnn.SpatialConvolution: 0.025406967003933 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093611252008531 nn.Linear: 0.064846704466987] nn.Sequential: [nn.Linear: 0.0090356025044863 nn.Linear: 0.034377761289434]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.69308304786682 cudnn.SpatialConvolution: 0.5550554394722 cudnn.SpatialConvolution: 0.39260107278824 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.1873591542244 nn.Linear: 0.2547692656517] nn.Sequential: [nn.Linear: 0.088935784995556 nn.Linear: 0.1943883150816]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0010150265274846 cudnn.SpatialConvolution: 0.00024594273995924 cudnn.SpatialConvolution: 0.00026152782540524 nn.ConcatTable: [nn.Sequential: [nn.Linear: 3.3394456874709e-05 nn.Linear: 0.0012462738858886] nn.Sequential: [nn.Linear: 1.526801662338e-05 nn.Linear: 0.00050966445538284]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.017604250460863 cudnn.SpatialConvolution: 0.032127890735865 cudnn.SpatialConvolution: 0.019865972921252 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.016693873330951 nn.Linear: 0.011221395805478] nn.Sequential: [nn.Linear: 0.0084234206005931 nn.Linear: 0.015037261880934]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	520000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051654704052026 cudnn.SpatialConvolution: 0.02701254800456 cudnn.SpatialConvolution: 0.025460855107584 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093724110112823 nn.Linear: 0.06455683662719] nn.Sequential: [nn.Linear: 0.0090391573647433 nn.Linear: 0.034460566106411]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.68796539306641 cudnn.SpatialConvolution: 0.55324250459671 cudnn.SpatialConvolution: 0.39086979627609 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.19785530865192 nn.Linear: 0.24629738926888] nn.Sequential: [nn.Linear: 0.088973999023438 nn.Linear: 0.19639360904694]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.00087190386028502 cudnn.SpatialConvolution: 0.00024756872089653 cudnn.SpatialConvolution: 0.00031614549781664 nn.ConcatTable: [nn.Sequential: [nn.Linear: 7.005669837572e-05 nn.Linear: 0.0043761182960096] nn.Sequential: [nn.Linear: 2.9294756685323e-05 nn.Linear: 0.00087381637233089]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.018125729635358 cudnn.SpatialConvolution: 0.030239600688219 cudnn.SpatialConvolution: 0.020258493721485 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.022280192002654 nn.Linear: 0.041566263884306] nn.Sequential: [nn.Linear: 0.0099677601829171 nn.Linear: 0.0099628111347556]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	530000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051738015731343 cudnn.SpatialConvolution: 0.027064046552288 cudnn.SpatialConvolution: 0.025526911423868 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0093871316387009 nn.Linear: 0.065195072122542] nn.Sequential: [nn.Linear: 0.0090436067029322 nn.Linear: 0.034717752103402]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.6993625164032 cudnn.SpatialConvolution: 0.55868262052536 cudnn.SpatialConvolution: 0.39762672781944 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.20701102912426 nn.Linear: 0.25720927119255] nn.Sequential: [nn.Linear: 0.089080668985844 nn.Linear: 0.19414260983467]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0087983799346605 cudnn.SpatialConvolution: 0.0015170366992675 cudnn.SpatialConvolution: 0.0024813062140359 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00024893767595918 nn.Linear: 0.024566865145621] nn.Sequential: [nn.Linear: 0.00013322217362978 nn.Linear: 0.0067495264775244]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.14581829309464 cudnn.SpatialConvolution: 0.14937181770802 cudnn.SpatialConvolution: 0.17600156366825 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.17164631187916 nn.Linear: 0.23652262985706] nn.Sequential: [nn.Linear: 0.11241039633751 nn.Linear: 0.097585238516331]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	540000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.051877933756271 cudnn.SpatialConvolution: 0.027130066420639 cudnn.SpatialConvolution: 0.02561228782725 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094018395497843 nn.Linear: 0.065808586340381] nn.Sequential: [nn.Linear: 0.0090479424169087 nn.Linear: 0.034854493650161]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.6928722858429 cudnn.SpatialConvolution: 0.5596062541008 cudnn.SpatialConvolution: 0.39842310547829 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.21255226433277 nn.Linear: 0.24624718725681] nn.Sequential: [nn.Linear: 0.094810038805008 nn.Linear: 0.19180457293987]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.001135040283439 cudnn.SpatialConvolution: 0.00023755034554895 cudnn.SpatialConvolution: 0.00035067081749589 nn.ConcatTable: [nn.Sequential: [nn.Linear: 6.2076607005286e-05 nn.Linear: 0.0035382608688928] nn.Sequential: [nn.Linear: 2.7235033705135e-05 nn.Linear: 0.0010352635689785]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.015496725216508 cudnn.SpatialConvolution: 0.020014198496938 cudnn.SpatialConvolution: 0.026109041646123 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.034200176596642 nn.Linear: 0.045306891202927] nn.Sequential: [nn.Linear: 0.011350831948221 nn.Linear: 0.01358444429934]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	550000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.052042636716982 cudnn.SpatialConvolution: 0.02718702651698 cudnn.SpatialConvolution: 0.025705777593596 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094165253823521 nn.Linear: 0.066192127556761] nn.Sequential: [nn.Linear: 0.0090539543290122 nn.Linear: 0.035270048734245]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.7062891125679 cudnn.SpatialConvolution: 0.56113386154175 cudnn.SpatialConvolution: 0.41534143686295 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.21308648586273 nn.Linear: 0.24261839687824] nn.Sequential: [nn.Linear: 0.098072826862335 nn.Linear: 0.19282312691212]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0024115040417576 cudnn.SpatialConvolution: 0.00068055500603355 cudnn.SpatialConvolution: 0.0010654893007037 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012613453685969 nn.Linear: 0.010878002483527] nn.Sequential: [nn.Linear: 5.5755986562637e-05 nn.Linear: 0.0019812255152755]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054345652461052 cudnn.SpatialConvolution: 0.060039304196835 cudnn.SpatialConvolution: 0.10165401548147 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.06072686612606 nn.Linear: 0.1039212346077] nn.Sequential: [nn.Linear: 0.046763092279434 nn.Linear: 0.030242746695876]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	560000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.052154667954979 cudnn.SpatialConvolution: 0.027226846967812 cudnn.SpatialConvolution: 0.025776915469277 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094284752726457 nn.Linear: 0.066155484605474] nn.Sequential: [nn.Linear: 0.0090582914899894 nn.Linear: 0.035441981191148]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.71255052089691 cudnn.SpatialConvolution: 0.57043302059174 cudnn.SpatialConvolution: 0.42397901415825 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.2152057737112 nn.Linear: 0.25537556409836] nn.Sequential: [nn.Linear: 0.10184951871634 nn.Linear: 0.19348874688148]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0049179984008922 cudnn.SpatialConvolution: 0.0014697357341243 cudnn.SpatialConvolution: 0.0014983819064011 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0001338265885626 nn.Linear: 0.0091345423302942] nn.Sequential: [nn.Linear: 5.4213494053812e-05 nn.Linear: 0.0016710295523493]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.081752777099609 cudnn.SpatialConvolution: 0.10285434871912 cudnn.SpatialConvolution: 0.13429525494576 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.07741205394268 nn.Linear: 0.092894367873669] nn.Sequential: [nn.Linear: 0.055880486965179 nn.Linear: 0.026626581326127]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	570000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.05229727745506 cudnn.SpatialConvolution: 0.027275810528047 cudnn.SpatialConvolution: 0.025858896847309 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094420210190946 nn.Linear: 0.066398434198618] nn.Sequential: [nn.Linear: 0.0090631894271211 nn.Linear: 0.035820662385528]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.7212091088295 cudnn.SpatialConvolution: 0.58641195297241 cudnn.SpatialConvolution: 0.42667362093925 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.22179386019707 nn.Linear: 0.26476955413818] nn.Sequential: [nn.Linear: 0.10255435109138 nn.Linear: 0.19282822310925]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0061181637234456 cudnn.SpatialConvolution: 0.0019699357960274 cudnn.SpatialConvolution: 0.0023623409880653 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00025713973351044 nn.Linear: 0.026306920915025] nn.Sequential: [nn.Linear: 0.00012080812079449 nn.Linear: 0.0061344879152268]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.14071643352509 cudnn.SpatialConvolution: 0.37516251206398 cudnn.SpatialConvolution: 0.24914544820786 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.327501475811 nn.Linear: 0.34644252061844] nn.Sequential: [nn.Linear: 0.14597889780998 nn.Linear: 0.10705658793449]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	580000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.052440028540883 cudnn.SpatialConvolution: 0.027318444579352 cudnn.SpatialConvolution: 0.025935930822495 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094568835679653 nn.Linear: 0.067284639054151] nn.Sequential: [nn.Linear: 0.0090677952023061 nn.Linear: 0.035968092630493]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.71649706363678 cudnn.SpatialConvolution: 0.59988325834274 cudnn.SpatialConvolution: 0.42742237448692 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.2244840413332 nn.Linear: 0.26711687445641] nn.Sequential: [nn.Linear: 0.10784867405891 nn.Linear: 0.19454310834408]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0046396159867993 cudnn.SpatialConvolution: 0.00099894230048687 cudnn.SpatialConvolution: 0.00088748440483237 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00011721396012378 nn.Linear: 0.0078725433348836] nn.Sequential: [nn.Linear: 4.6061902408341e-05 nn.Linear: 0.0016181959645305]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.088466987013817 cudnn.SpatialConvolution: 0.06584694236517 cudnn.SpatialConvolution: 0.067507445812225 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.04281397908926 nn.Linear: 0.067882478237152] nn.Sequential: [nn.Linear: 0.032233409583569 nn.Linear: 0.022680127993226]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	590000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.052602465278926 cudnn.SpatialConvolution: 0.027376334688939 cudnn.SpatialConvolution: 0.02601045076259 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094702616139624 nn.Linear: 0.067456566862916] nn.Sequential: [nn.Linear: 0.0090723501464213 nn.Linear: 0.036214516117506]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.72743201255798 cudnn.SpatialConvolution: 0.60431480407715 cudnn.SpatialConvolution: 0.44030591845512 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.22793084383011 nn.Linear: 0.28113973140717] nn.Sequential: [nn.Linear: 0.11405092477798 nn.Linear: 0.18822808563709]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.004253518294792 cudnn.SpatialConvolution: 0.00079781231718281 cudnn.SpatialConvolution: 0.00096397396237609 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012627482285243 nn.Linear: 0.010015744601343] nn.Sequential: [nn.Linear: 5.3455320098575e-05 nn.Linear: 0.001665921688061]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.10554169118404 cudnn.SpatialConvolution: 0.071991771459579 cudnn.SpatialConvolution: 0.066880621016026 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.048482146114111 nn.Linear: 0.11562375724316] nn.Sequential: [nn.Linear: 0.025121977552772 nn.Linear: 0.029032429680228]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	600000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.052808554297642 cudnn.SpatialConvolution: 0.027443774036347 cudnn.SpatialConvolution: 0.026099116862565 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0094870268620248 nn.Linear: 0.068567284243414] nn.Sequential: [nn.Linear: 0.0090773577174523 nn.Linear: 0.036421553435436]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.72694718837738 cudnn.SpatialConvolution: 0.5984051823616 cudnn.SpatialConvolution: 0.43863061070442 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.23173153400421 nn.Linear: 0.28552415966988] nn.Sequential: [nn.Linear: 0.11875247210264 nn.Linear: 0.19054920971394]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0030292713990691 cudnn.SpatialConvolution: 0.00041786053134779 cudnn.SpatialConvolution: 0.00050971642821601 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012091812957026 nn.Linear: 0.0084874797741498] nn.Sequential: [nn.Linear: 4.8422028075329e-05 nn.Linear: 0.0013774910769293]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.041292183101177 cudnn.SpatialConvolution: 0.059161927551031 cudnn.SpatialConvolution: 0.035461865365505 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.050648730248213 nn.Linear: 0.090699426829815] nn.Sequential: [nn.Linear: 0.019389607012272 nn.Linear: 0.018459666520357]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.85025598418713	TD error	0.062872641205788	Qmax	1
+
+Steps: 600000 (frames: 2400000), reward: 26.34, epsilon: 0.05, lr: 0.002, training time: 1705s, training rate: 234fps, testing time: 76s, testing rate: 260fps,  num. ep.: 218,  num. rewards: 5000
+
+Epoch goals: 6 / 218
+Steps: 	610000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.052934216276228 cudnn.SpatialConvolution: 0.027501917887353 cudnn.SpatialConvolution: 0.026199302965686 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0095031048263324 nn.Linear: 0.069455672479194] nn.Sequential: [nn.Linear: 0.0090833264065353 nn.Linear: 0.036816402660997]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.73179411888123 cudnn.SpatialConvolution: 0.61490046977997 cudnn.SpatialConvolution: 0.45837822556496 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.23597945272923 nn.Linear: 0.2947615981102] nn.Sequential: [nn.Linear: 0.12517979741096 nn.Linear: 0.19010597467422]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0012794188273372 cudnn.SpatialConvolution: 0.00032618979510949 cudnn.SpatialConvolution: 0.00047270821807968 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012161039566003 nn.Linear: 0.0094994989575063] nn.Sequential: [nn.Linear: 4.4170114137676e-05 nn.Linear: 0.001368453968208]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.023501271381974 cudnn.SpatialConvolution: 0.028629949316382 cudnn.SpatialConvolution: 0.030235935002565 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.046769935637712 nn.Linear: 0.098213046789169] nn.Sequential: [nn.Linear: 0.019787803292274 nn.Linear: 0.013080415315926]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	620000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.05304753610366 cudnn.SpatialConvolution: 0.027556665466011 cudnn.SpatialConvolution: 0.026293653818677 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0095211573702582 nn.Linear: 0.070036152213561] nn.Sequential: [nn.Linear: 0.0090896410604625 nn.Linear: 0.036931351112391]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.73960381746292 cudnn.SpatialConvolution: 0.62900513410568 cudnn.SpatialConvolution: 0.45853790640831 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.23672594130039 nn.Linear: 0.30011770129204] nn.Sequential: [nn.Linear: 0.12965182960033 nn.Linear: 0.19437274336815]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0041966030127624 cudnn.SpatialConvolution: 0.0013787833323209 cudnn.SpatialConvolution: 0.0022337960529072 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00020765946801655 nn.Linear: 0.017510961029114] nn.Sequential: [nn.Linear: 8.8551009790918e-05 nn.Linear: 0.003892754316922]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.11248350888491 cudnn.SpatialConvolution: 0.14108537137508 cudnn.SpatialConvolution: 0.13804772496223 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.1597471088171 nn.Linear: 0.23633480072021] nn.Sequential: [nn.Linear: 0.082512803375721 nn.Linear: 0.060783840715885]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Saved:	DQN3_0_1_HFO_FULL_Y1141.t7
+Steps: 	630000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.053266314045864 cudnn.SpatialConvolution: 0.027646045641492 cudnn.SpatialConvolution: 0.026395530147377 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0095405482897107 nn.Linear: 0.070669806800311] nn.Sequential: [nn.Linear: 0.0090967327859034 nn.Linear: 0.037529658109603]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.73335772752762 cudnn.SpatialConvolution: 0.63675320148468 cudnn.SpatialConvolution: 0.46094208955765 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.24409624934196 nn.Linear: 0.31491005420685] nn.Sequential: [nn.Linear: 0.12538443505764 nn.Linear: 0.19559873640537]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0022788592172172 cudnn.SpatialConvolution: 0.00082387154158101 cudnn.SpatialConvolution: 0.00090835255736817 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00010813056005844 nn.Linear: 0.0085350025531081] nn.Sequential: [nn.Linear: 5.0178888335994e-05 nn.Linear: 0.0016264401497663]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.049205541610718 cudnn.SpatialConvolution: 0.070475116372108 cudnn.SpatialConvolution: 0.065940715372562 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.056544590741396 nn.Linear: 0.099091157317162] nn.Sequential: [nn.Linear: 0.017421269789338 nn.Linear: 0.01784685254097]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	640000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.053389507652965 cudnn.SpatialConvolution: 0.027696719386099 cudnn.SpatialConvolution: 0.026495026162062 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0095587601396739 nn.Linear: 0.070740083827559] nn.Sequential: [nn.Linear: 0.0091034127752183 nn.Linear: 0.037730862615149]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.74662297964096 cudnn.SpatialConvolution: 0.63863480091095 cudnn.SpatialConvolution: 0.45764037966728 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.24432171881199 nn.Linear: 0.33553043007851] nn.Sequential: [nn.Linear: 0.12992088496685 nn.Linear: 0.1991578489542]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0010349406633336 cudnn.SpatialConvolution: 0.0002637827875294 cudnn.SpatialConvolution: 0.00043212301374506 nn.ConcatTable: [nn.Sequential: [nn.Linear: 7.7153270214074e-05 nn.Linear: 0.0038377939257006] nn.Sequential: [nn.Linear: 3.501904884562e-05 nn.Linear: 0.0011150202728747]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.014340400695801 cudnn.SpatialConvolution: 0.019786767661572 cudnn.SpatialConvolution: 0.022604189813137 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.029825549572706 nn.Linear: 0.063572518527508] nn.Sequential: [nn.Linear: 0.012877055443823 nn.Linear: 0.019919125363231]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	650000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.053542386622975 cudnn.SpatialConvolution: 0.027750157131797 cudnn.SpatialConvolution: 0.026569297009438 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0095764956233293 nn.Linear: 0.071053724545948] nn.Sequential: [nn.Linear: 0.0091106747133068 nn.Linear: 0.038148902782702]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.74674713611603 cudnn.SpatialConvolution: 0.63707226514816 cudnn.SpatialConvolution: 0.46721121668816 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.24670708179474 nn.Linear: 0.33083400130272] nn.Sequential: [nn.Linear: 0.12707342207432 nn.Linear: 0.19577836990356]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0029456320206537 cudnn.SpatialConvolution: 0.00058598994957282 cudnn.SpatialConvolution: 0.00095219820947018 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00010564381911635 nn.Linear: 0.0086164612804014] nn.Sequential: [nn.Linear: 5.8921403295149e-05 nn.Linear: 0.0021020404635131]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.043453354388475 cudnn.SpatialConvolution: 0.048146575689316 cudnn.SpatialConvolution: 0.057854741811752 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.086473375558853 nn.Linear: 0.078589297831059] nn.Sequential: [nn.Linear: 0.047806404531002 nn.Linear: 0.032550126314163]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	660000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.053737972096577 cudnn.SpatialConvolution: 0.027829619640653 cudnn.SpatialConvolution: 0.026675165006813 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0095974813729065 nn.Linear: 0.071371058767028] nn.Sequential: [nn.Linear: 0.0091188254188188 nn.Linear: 0.03859164198092]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.75012212991714 cudnn.SpatialConvolution: 0.63586229085922 cudnn.SpatialConvolution: 0.4606174826622 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.25024831295013 nn.Linear: 0.32347339391708] nn.Sequential: [nn.Linear: 0.12919554114342 nn.Linear: 0.19487865269184]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.001148960624153 cudnn.SpatialConvolution: 0.00030679043533134 cudnn.SpatialConvolution: 0.00051705361392081 nn.ConcatTable: [nn.Sequential: [nn.Linear: 8.4807443169805e-05 nn.Linear: 0.0052810681700786] nn.Sequential: [nn.Linear: 3.9733806647996e-05 nn.Linear: 0.0012994891285182]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.022509170696139 cudnn.SpatialConvolution: 0.028911087661982 cudnn.SpatialConvolution: 0.035799812525511 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.049162577837706 nn.Linear: 0.046861790120602] nn.Sequential: [nn.Linear: 0.019498931244016 nn.Linear: 0.019316090270877]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	670000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.053921023822635 cudnn.SpatialConvolution: 0.027908971549238 cudnn.SpatialConvolution: 0.026792060240921 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0096203421120493 nn.Linear: 0.072057411587821] nn.Sequential: [nn.Linear: 0.009127732952069 nn.Linear: 0.038999660680834]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.77004736661911 cudnn.SpatialConvolution: 0.63768792152405 cudnn.SpatialConvolution: 0.45183140039444 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.25262561440468 nn.Linear: 0.32062700390816] nn.Sequential: [nn.Linear: 0.12314320355654 nn.Linear: 0.18708756566048]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0015750334580307 cudnn.SpatialConvolution: 0.00062486198983465 cudnn.SpatialConvolution: 0.00097088921095621 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012670812641886 nn.Linear: 0.0077456387382897] nn.Sequential: [nn.Linear: 7.3974950384498e-05 nn.Linear: 0.0028989510602329]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.028924880549312 cudnn.SpatialConvolution: 0.063295170664787 cudnn.SpatialConvolution: 0.059500604867935 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.076668851077557 nn.Linear: 0.098178893327713] nn.Sequential: [nn.Linear: 0.037836045026779 nn.Linear: 0.043124720454216]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	680000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054069790859773 cudnn.SpatialConvolution: 0.027982789762561 cudnn.SpatialConvolution: 0.026906145495503 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0096429033625794 nn.Linear: 0.07227302433148] nn.Sequential: [nn.Linear: 0.0091368609321626 nn.Linear: 0.039466333032863]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.77860468626022 cudnn.SpatialConvolution: 0.64995235204697 cudnn.SpatialConvolution: 0.45016622543335 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.25188338756561 nn.Linear: 0.30306243896484] nn.Sequential: [nn.Linear: 0.1305145919323 nn.Linear: 0.19213755428791]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0033467712075513 cudnn.SpatialConvolution: 0.00095398668977377 cudnn.SpatialConvolution: 0.0014512077488457 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00022008096513745 nn.Linear: 0.013352049096462] nn.Sequential: [nn.Linear: 9.8530430653259e-05 nn.Linear: 0.0026403882846474]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.066661566495895 cudnn.SpatialConvolution: 0.063076093792915 cudnn.SpatialConvolution: 0.10156127810478 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.15521068871021 nn.Linear: 0.11852184683084] nn.Sequential: [nn.Linear: 0.11127848923206 nn.Linear: 0.034401170909405]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	690000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054247003883252 cudnn.SpatialConvolution: 0.028050352509637 cudnn.SpatialConvolution: 0.026998615157703 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0096628433624419 nn.Linear: 0.071657320863167] nn.Sequential: [nn.Linear: 0.0091466521252191 nn.Linear: 0.040041390426386]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.80445569753647 cudnn.SpatialConvolution: 0.6462727189064 cudnn.SpatialConvolution: 0.45763349533081 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.25604140758514 nn.Linear: 0.31614950299263] nn.Sequential: [nn.Linear: 0.12453649193048 nn.Linear: 0.18460638821125]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0038527311611632 cudnn.SpatialConvolution: 0.00088340429357127 cudnn.SpatialConvolution: 0.0012871921513218 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012404169646433 nn.Linear: 0.010484121486497] nn.Sequential: [nn.Linear: 6.5483596984401e-05 nn.Linear: 0.0024365680610613]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.065068945288658 cudnn.SpatialConvolution: 0.066342733800411 cudnn.SpatialConvolution: 0.075111553072929 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.22252035140991 nn.Linear: 0.1797249019146] nn.Sequential: [nn.Linear: 0.1042021587491 nn.Linear: 0.046875543892384]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	700000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.05436483482752 cudnn.SpatialConvolution: 0.028123595175079 cudnn.SpatialConvolution: 0.027094569988015 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0096824171008279 nn.Linear: 0.071417495053993] nn.Sequential: [nn.Linear: 0.009156257318929 nn.Linear: 0.040440727953713]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.80606031417847 cudnn.SpatialConvolution: 0.64483481645584 cudnn.SpatialConvolution: 0.45398589968681 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.26036366820335 nn.Linear: 0.32150265574455] nn.Sequential: [nn.Linear: 0.11897470057011 nn.Linear: 0.19101138412952]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0011488997975988 cudnn.SpatialConvolution: 0.00036096165900715 cudnn.SpatialConvolution: 0.00056503270682414 nn.ConcatTable: [nn.Sequential: [nn.Linear: 9.7977114363915e-05 nn.Linear: 0.0059727141605532] nn.Sequential: [nn.Linear: 5.0124015932924e-05 nn.Linear: 0.0012347217941844]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.027177704498172 cudnn.SpatialConvolution: 0.028369409963489 cudnn.SpatialConvolution: 0.032233413308859 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.035515822470188 nn.Linear: 0.086904041469097] nn.Sequential: [nn.Linear: 0.015657981857657 nn.Linear: 0.011966143734753]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+V	0.92661435008049	TD error	0.064934568166733	Qmax	1
+
+Steps: 700000 (frames: 2800000), reward: 427.51, epsilon: 0.05, lr: 0.002, training time: 1699s, training rate: 235fps, testing time: 73s, testing rate: 272fps,  num. ep.: 163,  num. rewards: 5000
+
+Epoch goals: 70 / 163
+Steps: 	710000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054517595528886 cudnn.SpatialConvolution: 0.028185090417583 cudnn.SpatialConvolution: 0.027175907543346 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0097012329558954 nn.Linear: 0.071405312917818] nn.Sequential: [nn.Linear: 0.0091651461489146 nn.Linear: 0.04079856785385]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.81674128770828 cudnn.SpatialConvolution: 0.65753650665283 cudnn.SpatialConvolution: 0.45046961307526 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.2604778110981 nn.Linear: 0.32296976447105] nn.Sequential: [nn.Linear: 0.11291644722223 nn.Linear: 0.18952441215515]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0019469712906813 cudnn.SpatialConvolution: 0.00050678641000619 cudnn.SpatialConvolution: 0.00068224750283298 nn.ConcatTable: [nn.Sequential: [nn.Linear: 7.7534509791064e-05 nn.Linear: 0.0060115413611417] nn.Sequential: [nn.Linear: 4.195978243462e-05 nn.Linear: 0.00094373248407509]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.035530902445316 cudnn.SpatialConvolution: 0.060507245361805 cudnn.SpatialConvolution: 0.062196675688028 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.035015374422073 nn.Linear: 0.077363647520542] nn.Sequential: [nn.Linear: 0.024342201650143 nn.Linear: 0.010911851190031]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	720000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054607558416334 cudnn.SpatialConvolution: 0.028234389828264 cudnn.SpatialConvolution: 0.027252200776872 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0097188444569452 nn.Linear: 0.070962939530546] nn.Sequential: [nn.Linear: 0.0091735559332489 nn.Linear: 0.041229008677319]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.82925200462341 cudnn.SpatialConvolution: 0.6572231054306 cudnn.SpatialConvolution: 0.44981208443642 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.26106595993042 nn.Linear: 0.3303587436676] nn.Sequential: [nn.Linear: 0.1115752980113 nn.Linear: 0.19105525314808]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0018476059100522 cudnn.SpatialConvolution: 0.00052999931415379 cudnn.SpatialConvolution: 0.00072266675287052 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00012016943929984 nn.Linear: 0.0073067394413943] nn.Sequential: [nn.Linear: 6.2459771574551e-05 nn.Linear: 0.0018084632313632]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.044149145483971 cudnn.SpatialConvolution: 0.05416202545166 cudnn.SpatialConvolution: 0.052580703049898 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.059812426567078 nn.Linear: 0.0884178429842] nn.Sequential: [nn.Linear: 0.026038527488708 nn.Linear: 0.017142295837402]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	730000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054750336971182 cudnn.SpatialConvolution: 0.028297656406915 cudnn.SpatialConvolution: 0.027341279929732 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0097401745883489 nn.Linear: 0.07202789469784] nn.Sequential: [nn.Linear: 0.0091818287723976 nn.Linear: 0.04125330135868]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.83421742916107 cudnn.SpatialConvolution: 0.66745442152023 cudnn.SpatialConvolution: 0.43845796585083 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.26058110594749 nn.Linear: 0.33626452088356] nn.Sequential: [nn.Linear: 0.10920597612858 nn.Linear: 0.18478021025658]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0015816165183608 cudnn.SpatialConvolution: 0.00042670826541137 cudnn.SpatialConvolution: 0.0007053882396564 nn.ConcatTable: [nn.Sequential: [nn.Linear: 9.448326289533e-05 nn.Linear: 0.0064853689810063] nn.Sequential: [nn.Linear: 4.0013998781013e-05 nn.Linear: 0.0011980181565578]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.022778946906328 cudnn.SpatialConvolution: 0.033805582672358 cudnn.SpatialConvolution: 0.049881648272276 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.052356321364641 nn.Linear: 0.085542529821396] nn.Sequential: [nn.Linear: 0.027511578053236 nn.Linear: 0.021462736651301]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	740000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054841864477355 cudnn.SpatialConvolution: 0.02835255202262 cudnn.SpatialConvolution: 0.027432323953337 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0097603258198244 nn.Linear: 0.071688193645969] nn.Sequential: [nn.Linear: 0.0091913540655799 nn.Linear: 0.041734551629659]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.84084981679916 cudnn.SpatialConvolution: 0.68049901723862 cudnn.SpatialConvolution: 0.42851382493973 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.25945511460304 nn.Linear: 0.34463432431221] nn.Sequential: [nn.Linear: 0.10809530317783 nn.Linear: 0.18075317144394]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0022149826935188 cudnn.SpatialConvolution: 0.00067360683879916 cudnn.SpatialConvolution: 0.0010535783002687 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00013406424182988 nn.Linear: 0.010196746264262] nn.Sequential: [nn.Linear: 6.9317905454391e-05 nn.Linear: 0.0018563079159874]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.037466522306204 cudnn.SpatialConvolution: 0.058352820575237 cudnn.SpatialConvolution: 0.054939307272434 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.058163028210402 nn.Linear: 0.10322298109531] nn.Sequential: [nn.Linear: 0.035832945257425 nn.Linear: 0.026740171015263]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Steps: 	750000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.054994232943658 cudnn.SpatialConvolution: 0.028422634117004 cudnn.SpatialConvolution: 0.027531918207725 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0097822799772173 nn.Linear: 0.072773322612989] nn.Sequential: [nn.Linear: 0.0092020453514164 nn.Linear: 0.0421743444778]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.85104423761368 cudnn.SpatialConvolution: 0.68084192276001 cudnn.SpatialConvolution: 0.43068346381187 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.26081639528275 nn.Linear: 0.33865210413933] nn.Sequential: [nn.Linear: 0.1114424020052 nn.Linear: 0.18335090577602]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.0028737685949067 cudnn.SpatialConvolution: 0.00075295955619475 cudnn.SpatialConvolution: 0.00092215926579347 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.00015223685355524 nn.Linear: 0.0067043286399513] nn.Sequential: [nn.Linear: 7.7037267269173e-05 nn.Linear: 0.0018454947957044]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight grad max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.057447962462902 cudnn.SpatialConvolution: 0.060145273804665 cudnn.SpatialConvolution: 0.053285133093596 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.073700852692127 nn.Linear: 0.14388944208622] nn.Sequential: [nn.Linear: 0.036098878830671 nn.Linear: 0.017029993236065]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Saved:	DQN3_0_1_HFO_FULL_Y1141.t7
+Steps: 	760000
+Weight norms:
+nn.Sequential: [cudnn.SpatialConvolution: 0.055158186288126 cudnn.SpatialConvolution: 0.028500817708113 cudnn.SpatialConvolution: 0.027619160127886 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.0098043311725435 nn.Linear: 0.072766750455003] nn.Sequential: [nn.Linear: 0.0092129329291659 nn.Linear: 0.042491428589686]] nn.Sequential: [nn.ParallelTable: [nn.Sequential: [nn.ConcatTable: [nn.Sequential: []] ]] ]]
+Weight max:
+nn.Sequential: [cudnn.SpatialConvolution: 0.85255396366119 cudnn.SpatialConvolution: 0.6919664144516 cudnn.SpatialConvolution: 0.43962037563324 nn.ConcatTable: [nn.Sequential: [nn.Linear: 0.25959375500679 nn.Linear: 0.34429323673248] nn.Sequential: [nn.Linear: 0.1057201847434 nn.Linear: 0.17847026884556]] nn.Sequential: [nn.ParallelTable: [nn.Seq
