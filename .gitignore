@@ -3,3 +3,5 @@ torch
 dqn/*.t7
 dqn/Nets
 *.pyc
+Logs/Results/
+*.png
