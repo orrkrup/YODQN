@@ -83,6 +83,9 @@ function gameEnv:_getScreen()
    local stringimage = ''
 
    while datacount > 0 do
+     -- recv in TCP mode
+     --self.img_buffer = self.img_buffer .. self.api_agent.img_socket.recv(datacount, 0x40)
+     -- recv in UDP mode
      self.img_buffer = self.img_buffer .. self.api_agent.img_socket.recv(datacount, 0x40)
 
      local buflen = string.len(self.img_buffer)
