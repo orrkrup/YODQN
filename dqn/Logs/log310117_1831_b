@@ -1,0 +1,31 @@
+../run_gpu: line 7: [: missing `]'
+../run_gpu: line 7: -z: command not found
+-framework hfowrap -game_path /home/deep3/Orr_Yona_DQN/dqn/roms/ -name DQN3_0_1_HFO_FULL_Y1831 -env HFO -env_params useRGB=true -agent NeuralQLearner -agent_params lr=0.002,ep=1,ep_end=0.1,ep_endt=200000,discount=0.99,hist_len=4,learn_start=5000,replay_memory=120000,update_freq=4,n_replay=1,network="convnet_atari3",preproc="net_downsample_2x_full_y",state_dim=7056,minibatch_size=32,rescale_r=1,ncols=1,bufferSize=512,valid_size=500,target_q=10000,clip_delta=1,min_reward=-4,max_reward=1000 -steps 10000000 -eval_freq 100000 -eval_steps 5000 -prog_freq 10000 -save_freq 125000 -actrep 4 -gpu 0 -random_starts 30 -pool_frms type="max",size=2 -seed 1 -threads 4 -server_port 6023 -image_port 7023
+Torch Threads:	1
+Using GPU device id:	0
+Torch Seed:	1
+CUTorch Seed:	1791095845
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "api_agent.py", line 21, in <module>
+    from hfo import *
+  File "/home/deep3/HFO/hfo/hfo.py", line 69, in <module>
+    hfo_lib.getUnum.argtypes = [c_void_p]
+  File "/usr/lib/python2.7/ctypes/__init__.py", line 378, in __getattr__
+    func = self.__getitem__(name)
+  File "/usr/lib/python2.7/ctypes/__init__.py", line 383, in __getitem__
+    func = self._FuncPtr((name_or_ordinal, self))
+AttributeError: /home/deep3/HFO/hfo/libhfo_c.so: undefined symbol: getUnum
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+NameError: name 'api_agent' is not defined
+qlua: ./hfowrap.lua:186: attempt to index field 'api_agent' (a nil value)
+stack traceback:
+	[C]: in function '__index'
+	./hfowrap.lua:186: in function 'getActions'
+	./hfowrap.lua:54: in function 'reset'
+	./hfowrap.lua:26: in function '__init'
+	/home/deep3/torch/install/share/lua/5.1/torch/init.lua:91: in function </home/deep3/torch/install/share/lua/5.1/torch/init.lua:87>
+	[C]: in function 'GameEnvironment'
+	./initenv.lua:121: in function 'setup'
+	/home/deep3/Orr_Yona_DQN/dqn/train_agent.lua:55: in main chunk

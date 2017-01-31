@@ -32,7 +32,7 @@ class dqnhfoAgent(object):
     self.terminal = False
     self.status = 0
     self.actions = []
-    self.team = teamplayer
+    self.team = True
 
     print "Initializing api_agent"
     # Create the HFO environment
@@ -59,14 +59,14 @@ class dqnhfoAgent(object):
     lua.execute("require 'torch'")
 
     # Initialize image receiving port (TCP)
-    #self.img_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #self.img_socket.settimeout(1)
-    #self.img_socket.connect(('localhost', image_port))
+    self.img_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    self.img_socket.settimeout(1)
+    self.img_socket.connect(('localhost', image_port))
 
     # Initialize image receiving port (UDP)
-    self.img_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    self.img_socket.settimeout(1)
-    self.img_socket.bind(('localhost', image_port))
+    #self.img_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    #self.img_socket.settimeout(1)
+    #self.img_socket.bind(('localhost', image_port))
 
     print "api_agent intialization complete"
 
