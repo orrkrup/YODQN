@@ -47,6 +47,9 @@ cmd:option('-gpu', -1, 'gpu flag')
 cmd:option('-server_port', 6000, 'RoboCup server port number')
 cmd:option('-image_port', 7070, 'soccerwindow2 image send port')
 
+cmd:option('-teamplay', 0, 'Signals two players are active')
+cmd:option('-onenet', 0, 'Two players active but with the same network')
+
 cmd:text()
 
 local opt = cmd:parse(arg)

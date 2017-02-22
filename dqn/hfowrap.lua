@@ -16,7 +16,11 @@ function gameEnv:__init(_opt)
     python.execute("import api_agent")
     assert(_opt.image_port, "opt image port is nil")
     assert(_opt.server_port, "opt server port is nil")
-    self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d)", _opt.server_port, _opt.image_port))
+    if 0 == _opt.onenet then
+        self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+    else
+        self.api_agent = python.eval(string.format("api_agent.doubledqnhfoAgent(%d, %d)", _opt.server_port, _opt.image_port))
+    end
     local _opt = _opt or {}
     self.img_buffer = ""
     -- defaults to emulator speed

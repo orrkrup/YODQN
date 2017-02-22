@@ -8,7 +8,8 @@ processes, necProcesses = [], []
 # Command to run the rcssserver. Edit as needed.
 SERVER_BIN = 'rcssserver'
 # Command to run the monitor. Edit as needed.
-MONITOR_BIN = 'soccerwindow2 --canvas-size=378x250 --ball-size=1.2 --time-shift-replay=false --hide-stamina --hide-player-number --player-size=2'
+# removed --hide-player-number
+MONITOR_BIN = 'soccerwindow2 --canvas-size=378x250 --ball-size=1.2 --time-shift-replay=false --hide-stamina --player-size=2'
 
 def launch(cmd, name = 'Unknown', necessary = True, supressOutput = True):
   """Launch a process.
@@ -126,7 +127,7 @@ def parseArgs():
   p.add_argument('--agent-play-goalie', dest='agentPlayGoalie', action='store_true',
                  default=False, help='Defense-agent plays goalie, rather than defender.')
   p.add_argument('--offense-team', dest='offenseTeam', type=str, default='base',
-                 help='Offense team binary. Options: '+str(installed_teams)+'. Default: base.') 
+                 help='Offense team binary. Options: '+str(installed_teams)+'. Default: base.')
   p.add_argument('--defense-team', dest='defenseTeam', type=str, default='base',
                  help='Defense team binary. Options: '+str(installed_teams)+'. Default: base.')
   p.add_argument('--no-sync', dest='sync', action='store_false', default=True,

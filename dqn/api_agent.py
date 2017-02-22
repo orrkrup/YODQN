@@ -32,7 +32,7 @@ class dqnhfoAgent(object):
     self.terminal = False
     self.status = 0
     self.actions = []
-    self.team = True
+    self.team = teamplayer
 
     print "Initializing api_agent"
     # Create the HFO environment
@@ -43,9 +43,6 @@ class dqnhfoAgent(object):
                                  '/home/deep3/HFO/bin/teams/base/config/formations-dt', server_port,
                                  'localhost', 'base_left', False)
     print "api_agent connected to server"
-
-    if teamplayer:
-        self.unum = hfo_env.getUnum()
 
     # image assistance paramteres
     self.wantimage = True
@@ -174,7 +171,7 @@ class dqnhfoAgent(object):
       action = NOOP
     if PASS == action:
         ## Tweak for two players - 11 and 7
-        teammate_unum = 18 - self.unum
+        teammate_unum = 18 - self.hfo_env.playerOnBall().unum
         self.hfo_env.act(action, teammate_unum)
         return
     self.hfo_env.act(action)

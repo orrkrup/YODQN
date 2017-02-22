@@ -65,7 +65,7 @@ function trans:__init(args)
     self.last_begin_index = 1
     self.numEntries_s = 0
     self.insertIndex_s = 0
-    self.prioReplayProb = 0.2
+    self.prioReplayProb = 0.5
 
     -- Tables for storing the last histLen states.  They are used for
     -- constructing the most recent agent state more easily.
