@@ -49,6 +49,8 @@ cmd:option('-image_port', 7070, 'soccerwindow2 image send port')
 
 cmd:option('-teamplay', 0, 'Signals two players are active')
 cmd:option('-onenet', 0, 'Two players active but with the same network')
+cmd:option('-shooter', 0, 'Use shooter agent')
+cmd:option('-midfielder', 0, 'Use midfielder agent')
 
 cmd:text()
 

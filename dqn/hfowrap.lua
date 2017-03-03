@@ -13,13 +13,26 @@ local gameEnv = torch.class('GameEnvironment')
 
 
 function gameEnv:__init(_opt)
+    print("Initializing hfowrap")
     python.execute("import api_agent")
     assert(_opt.image_port, "opt image port is nil")
     assert(_opt.server_port, "opt server port is nil")
     if 0 == _opt.onenet then
-        self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        if 1 == _opt.shooter then
+          self.api_agent = python.eval(string.format("api_agent.shooterAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        elseif 1 == _opt.midfielder then
+          self.api_agent = python.eval(string.format("api_agent.midfielderAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        else
+          self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        end
     else
-        self.api_agent = python.eval(string.format("api_agent.doubledqnhfoAgent(%d, %d)", _opt.server_port, _opt.image_port))
+        print("initializing onenet option")
+        self.onenet = true
+        self.d_actions = {{0,0}}
+        self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        os.exit()
+        self.mid_agent = python.eval(string.format("api_agent.midfielderAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        print("both onenet agents intialized")
     end
     local _opt = _opt or {}
     self.img_buffer = ""
@@ -73,21 +86,41 @@ end
 function gameEnv:_step(action)
     assert(action)
     -- play step with action
-    self.api_agent.act(action)
-    local terminal = self.api_agent.agentStep()
+    local terminal = 0
+    local reward = 0
     local screen = self:_getScreen()
-    local reward = self.api_agent.getReward()
+
+    if self.onenet then
+      self.shooter_agent.act(self.d_actions[action][0])
+      self.mid_agent.act(self.d_actions[action][1])
+      -- have to call both agentStep methods
+      self.mid_agent.agentStep()
+      terminal = self.shooter_agent.agentStep()
+      -- reward is defined as the sum of rewards (for now)
+      reward = self.shooter_agent.getReward() + self.mid_agent.getReward()
+    else
+      self.api_agent.act(action)
+      terminal = self.api_agent.agentStep()
+      reward = self.api_agent.getReward()
+    end
     return screen, reward, terminal
 end
 
 
 function gameEnv:_getScreen()
    ---- This is the NEW WAY ----
-   local datacount = self.api_agent.height * self.api_agent.width * 3
+   local agent
+   if self.onenet then
+     agent = self.shooter_agent
+   else
+     agent = self.api_agent
+   end
+
+   local datacount = agent.height * agent.width * 3
    local stringimage = ''
 
    while datacount > 0 do
-     self.img_buffer = self.img_buffer .. self.api_agent.img_socket.recv(datacount, 0x40)
+     self.img_buffer = self.img_buffer .. agent.img_socket.recv(datacount, 0x40)
 
      local buflen = string.len(self.img_buffer)
      if buflen == 0 then
@@ -113,9 +146,6 @@ function gameEnv:_getScreen()
    --print(string.format("Tensor size is %d, %d, %d", img_tensor:size(1), img_tensor:size(2), img_tensor:size(3)))
    --local win = image.display({image=img_tensor, win=win})
 
-   ---- This is the OLD WAY ----
-   -- local img_table = self.api_agent.getScreen()
-   -- local img_tensor = torch.Tensor(img_table)
    return img_tensor:transpose(1,3) --:transpose(2,3):transpose(1,2)
 end
 
@@ -181,13 +211,34 @@ from the current game.
 ]]
 function gameEnv:nObsFeature()
     -- return self.api_agent.getStateDims()
-    return self.api_agent.height*self.api_agent.width
+    local agent
+    if self.onenet then
+      agent = self.shooter_agent
+    else
+      agent = self.api_agent
+    end
+    return agent.height*agent.width
 end
 
 
 -- Function returns a table with valid actions in the current game.
 function gameEnv:getActions()
+  if self.onenet then
+    -- one network controlling two players
+    local sp_actions = self.shooter_agent.getActions()
+    local ind = 0
+    local actions = {0}
+    for i = 1, #sp_actions do
+      for j = 1, #sp_actions do
+        table.insert(self.d_actions, {sp_actions[i], sp_actions[j]})
+        table.insert(actions, #actions)
+      end
+    end
+    return actions
+  else
+    -- Regular single player
     return self.api_agent.getActions()
+  end
 end
 
 

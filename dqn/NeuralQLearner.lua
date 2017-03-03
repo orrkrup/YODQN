@@ -71,6 +71,7 @@ function nql:__init(args)
               " is not a string!")
     end
 
+    require 'cudnn'
     local msg, err = pcall(require, self.network)
     if not msg then
         -- try to load saved agent
@@ -153,7 +154,7 @@ function nql:__init(args)
       cudnn.benchmark = true
       cudnn.convert(self.network, cudnn)
     end
-    
+
     if self.target_q then
         self.target_network = self.network:clone()
     end

@@ -9,13 +9,10 @@
 
 import socket
 import sys
-import StringIO
-from PIL import Image
-import numpy
-#import scipy.misc
-#import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 import lua
+from random import uniform
+from math import sqrt
 
 sys.path.insert(0, '/home/deep3/HFO/hfo/')
 from hfo import *
@@ -32,6 +29,7 @@ class dqnhfoAgent(object):
     self.terminal = False
     self.status = 0
     self.actions = []
+    self.last_action = NOOP
     self.team = teamplayer
 
     print "Initializing api_agent"
@@ -60,11 +58,6 @@ class dqnhfoAgent(object):
     self.img_socket.settimeout(1)
     self.img_socket.connect(('localhost', image_port))
 
-    # Initialize image receiving port (UDP)
-    #self.img_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    #self.img_socket.settimeout(1)
-    #self.img_socket.bind(('localhost', image_port))
-
     print "api_agent intialization complete"
 
 
@@ -84,66 +77,6 @@ class dqnhfoAgent(object):
     return self.reward
 
 
-  def getScreen(self):
-    #getstart = datetime.now()
-    datacount = self.height * self.width * 3
-    stringimage = ''
-
-    while datacount > 0:
-      self.img_buffer += self.img_socket.recv(datacount, 0x40)
-
-      buflen = len(self.img_buffer)
-      # Stop loop if received nothing:
-      if buflen == 0:
-        return
-
-      if datacount - buflen >= 0:
-        stringimage += self.img_buffer
-        datacount -= buflen
-        self.img_buffer = ''
-      else:
-        stringimage += self.img_buffer[:datacount]
-        self.img_buffer = self.img_buffer[datacount + 1:]
-        datacount = 0
-
-    arr1d = numpy.frombuffer(stringimage, dtype=numpy.uint8)
-    #print len(arr1d)
-    arr3d_large = numpy.reshape(arr1d, (self.height, self.width, 3))
-
-    ### snippet to print first image array to log and show it
-    #if self.wantimage:
-    #  self.wantimage = False
-    #  print arr3d
-    #  plt.imshow(arr3d)
-    #  plt.show()
-
-    height = 84
-    width = 84
-    arr3d = scipy.misc.imresize(arr3d_large, (height, width, 3))
-
-    #getmid = datetime.now()
-
-    img_table = lua.eval("{{}, {}, {}}")
-    for x in range(width):
-      img_table[1][x+1] = lua.eval("{}")
-      img_table[2][x+1] = lua.eval("{}")
-      img_table[3][x+1] = lua.eval("{}")
-      for y in range(height):
-        img_table[1][x+1][y+1] = arr3d[x][y][0]/255
-        img_table[2][x+1][y+1] = arr3d[x][y][1]/255
-        img_table[3][x+1][y+1] = arr3d[x][y][2]/255
-
-    self.screen = img_table
-    #conversion = datetime.now() - getmid
-    ### Code to time image receive
-    #delta = getmid - getstart
-    #self.img_recv_time += delta
-    #self.num_imgs += 1
-    #print "get screen from tcp (and rescale) was {}".format(delta)
-    #print "conversion part was {}".format(conversion)
-    return self.screen
-
-
   def agentStep(self):
     terminal = False
     self.status = self.hfo_env.step()
@@ -156,10 +89,10 @@ class dqnhfoAgent(object):
     ### Change when necessary
     if self.team:
         self.actions = [MOVE, SHOOT, DRIBBLE, PASS]
-        return lua.eval("{{{}, {}, {}, {}}}".format(MOVE, SHOOT, PASS, DRIBBLE))
+        return lua.eval("{{{}, {}, {}, {}}}".format(*self.actions))
     else:
         self.actions = [MOVE, SHOOT, DRIBBLE]
-        return lua.eval("{{{}, {}, {}}}".format(MOVE, SHOOT, DRIBBLE))
+        return lua.eval("{{{}, {}, {}}}".format(*self.actions))
 
 
   def getStateDims(self):
@@ -168,7 +101,8 @@ class dqnhfoAgent(object):
 
   def act(self, action):
     if action == 0:
-      action = NOOP
+        action = NOOP
+    self.last_action = action
     if PASS == action:
         ## Tweak for two players - 11 and 7
         teammate_unum = 18 - self.hfo_env.playerOnBall().unum
@@ -177,23 +111,79 @@ class dqnhfoAgent(object):
     self.hfo_env.act(action)
 
 
-if __name__ == '__main__':
-  ### Create agent object
-  agent = dqnhfoAgent()
+class shooterAgent(dqnhfoAgent):
+    def getActions(self):
+        self.actions = [MOVE, SHOOT, DRIBBLE, PASS, MOVE_TO]
+        return lua.eval("{{{}, {}, {}, {}, {}}}".format(*self.actions))
 
-  steps = 0
-  while steps < 100:
-    # get state from HFO (blocking)
-    agent.getScreen()
-    # act in HFO - kick if on ball, move otherwise
-    if agent.hfo_env.getState()[5] > 0:
-      action = 1
-    else:
-      action = 0
-    agent.act(action)
-    # get status from HFO.step
-    if agent.agentStep():
-      steps += 1
+    def act(self, action):
+        if MOVE_TO == action:
+            self.last_action = MOVE_TO
+            x_loc = uniform(13.0, 26.0)
+            y_loc = uniform(-20.0, 20.0)
+            self.hfo_env.act(action, x_loc, y_loc)
+        else:
+            dqnhfoAgent.act(self, action)
 
-  print "Collected {} images.".format(agent.num_imgs)
-  print "Average image time: {}".format(agent.img_recv_time / agent.num_imgs)
+    def getReward(self):
+        features = self.hfo_env.getState()
+        self_x = features[0]
+        self_y = features[1]
+        teammate_x = features[13]
+        teammate_y = features[14]
+        base_reward = dqnhfoAgent.getReward(self)
+        if features[5]:
+            # if kickable
+            if SHOOT == self.last_action:
+               self.reward = base_reward + 10
+            elif PASS == self.last_action:
+               self.reward = base_reward - 100
+        elif (MOVE_TO == self.last_action and
+              13.0 < self_x and 26.0 > self_x and
+              -20.0 < self_y and 20.0 > self_y):
+            # Player is in good area to kick from
+            self.reward = base_reward + 2
+
+        # Set negative reward for players close to each other
+        sqdist = pow(teammate_x - self_x, 2) + pow(teammate_y - self_y, 2)
+        if sqdist < 225:
+            distreward = min(2.0/sqdist, 10)
+            self.reward -= distreward
+
+        return self.reward
+
+class midfielderAgent(dqnhfoAgent):
+    def getActions(self):
+        self.actions = [MOVE, SHOOT, DRIBBLE, PASS, MOVE_TO]
+        return lua.eval("{{{}, {}, {}, {}, {}}}".format(*self.actions))
+
+    def act(self, action):
+        if MOVE_TO == action:
+            self.last_action = MOVE_TO
+            x_loc = uniform(13.0, 26.0)
+            y_loc = uniform(-20.0, 20.0)
+            self.hfo_env.act(action, x_loc, y_loc)
+        else:
+            dqnhfoAgent.act(self, action)
+
+    def getReward(self):
+        features = self.hfo_env.getState()
+        self_x = features[0]
+        self_y = features[1]
+        teammate_x = features[13]
+        teammate_y = features[14]
+        base_reward = dqnhfoAgent.getReward(self)
+        if features[5]:
+            # if kickable
+            if SHOOT == self.last_action:
+               self.reward = base_reward - 100
+            elif PASS == self.last_action:
+               self.reward = base_reward + 10
+
+        # Set negative reward for players close to each other
+        sqdist = pow(teammate_x - self_x, 2) + pow(teammate_y - self_y, 2)
+        if sqdist < 225:
+            distreward = min(2.0/sqdist, 10)
+            self.reward -= distreward
+
+        return self.reward
