@@ -334,7 +334,7 @@ function trans:add(s, a, r, term)
             prev_rIndex = self.numEntries
         end
         -- If necessary, add trajectory to prioritized success replay
-        if self.r[prev_rIndex] > 50 then
+        if self.r[prev_rIndex] > 4.5 then
             for k=self.last_begin_index,self.insertIndex do
 
                -- Always insert at next index, then wrap around

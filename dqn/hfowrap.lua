@@ -29,9 +29,9 @@ function gameEnv:__init(_opt)
         print("initializing onenet option")
         self.onenet = true
         self.d_actions = {{0,0}}
-        self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
-        os.exit()
-        self.mid_agent = python.eval(string.format("api_agent.midfielderAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        self.api_agent, self.mid_agent = python.eval(string.format("api_agent.runDoubleAgent(%d, %d)", _opt.server_port, _opt.image_port))
+        --self.api_agent = python.eval(string.format("api_agent.dqnhfoAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
+        --self.mid_agent = python.eval(string.format("api_agent.midfielderAgent(%d, %d, %d)", _opt.server_port, _opt.image_port, _opt.teamplay))
         print("both onenet agents intialized")
     end
     local _opt = _opt or {}
@@ -120,6 +120,7 @@ function gameEnv:_getScreen()
    local stringimage = ''
 
    while datacount > 0 do
+
      self.img_buffer = self.img_buffer .. agent.img_socket.recv(datacount, 0x40)
 
      local buflen = string.len(self.img_buffer)
